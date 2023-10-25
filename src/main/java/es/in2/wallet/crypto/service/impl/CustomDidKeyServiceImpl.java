@@ -15,22 +15,20 @@ import reactor.core.publisher.Mono;
 @Service
 public class CustomDidKeyServiceImpl implements CustomDidKeyService {
 
+    @Override
     public Mono<String> createDidKey() {
         KeyId keyId = KeyService.Companion.getService().generate(KeyAlgorithm.ECDSA_Secp256k1);
-        Mono<String> didKey = Mono.just(DidService.INSTANCE.create(DidMethod.key, keyId.getId(), null))
+        return Mono.just(DidService.INSTANCE.create(DidMethod.key, keyId.getId(), null))
                 .doOnSuccess(result -> log.info("Success: {}", result))
                 .doOnError(throwable -> log.error("Error: {}", throwable.getMessage()));
-        // todo save result to db using Wallet Data
-        return didKey;
     }
 
+    @Override
     public Mono<String> createDidKeyJwkJcsPub() {
         KeyId keyId = KeyService.Companion.getService().generate(KeyAlgorithm.ECDSA_Secp256r1);
-        Mono<String> didKey = Mono.just(DidService.INSTANCE.create(DidMethod.key, keyId.getId(), new DidKeyCreateOptions(true)))
+        return Mono.just(DidService.INSTANCE.create(DidMethod.key, keyId.getId(), new DidKeyCreateOptions(true)))
                 .doOnSuccess(result -> log.info("Success: {}", result))
                 .doOnError(throwable -> log.error("Error: {}", throwable.getMessage()));
-        // todo save result to db using Wallet Data
-        return didKey;
     }
 
 }
