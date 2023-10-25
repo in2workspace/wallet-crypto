@@ -1,0 +1,40 @@
+version: '3.8'
+services:
+
+#  wallet-crypto:
+#    image: wallet-crypto:latest
+#    environment:
+#      - SPRING_DATASOURCE_URL=jdbc:mysql://local-mysql:3306/test
+#      - SPRING_DATASOURCE_USERNAME=in2admin
+#      - SPRING_DATASOURCE_PASSWORD=in2pass
+#      # Agrega otras configuraciones de tu aplicación aquí
+#    depends_on:
+#      - local-mysql  # Asegura que el contenedor de MySQL esté funcionando antes de ejecutar tu aplicación
+
+
+  vault:
+    image: hashicorp/vault:latest
+    environment:
+      VAULT_DEV_ROOT_TOKEN_ID: "00000000-0000-0000-0000-000000000000"
+    ports:
+      - "8200:8200"
+    privileged: true
+
+  local-mysql:
+    container_name: local-mysql
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: D83Wh$tb83D8
+      MYSQL_DATABASE: test
+      MYSQL_USER: in2admin
+      MYSQL_PASSWORD: in2pass
+    volumes:
+      - mysql-volume:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+volumes:
+  vault-volume:
+  mysql-volume:

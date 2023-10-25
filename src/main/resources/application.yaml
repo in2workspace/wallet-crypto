@@ -1,0 +1,74 @@
+# Spring Configuration
+spring:
+  application:
+    name: spring-ms-skeleton
+  profiles:
+    active: default
+  security:
+    user:
+      name: in2admin
+      password: in2pass
+
+# Server Configuration
+server:
+  port: 8080
+
+# Logging Configuration
+logging:
+  level:
+    in2.wallet.crypto: INFO
+
+
+# Actuator Configuration
+management:
+  endpoints:
+    enabled-by-default: false
+    web:
+      exposure:
+        include: health, info, loggers, metrics
+      base-path: /
+      path-mapping:
+        health: health
+        info: info
+        loggers: loggers
+        metrics: metrics
+  endpoint:
+    health:
+      enabled: true
+      show-details: always
+    loggers:
+      enabled: true
+    metrics:
+      enabled: true
+
+# Documentation Configuration
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /spring-ui
+    tags-sorter: alpha
+    operations-sorter: method
+
+# Vault
+vault:
+  host: "http://localhost"
+  port: 8200
+  token: "00000000-0000-0000-0000-000000000000"
+
+openapi:
+  server:
+    url: http://localhost:8081
+    description: Spring MS Skeleton API
+  info:
+    title: IN2 <insert name> project
+    version: 0.0.1
+    termsOfService: $apiUrl/terms-of-service
+    license:
+      name: MIT License
+      url: https://choosealicense.com/licenses/mit/
+    contact:
+      email: example@in2.es
+      name: IN2
+      url: https://in2.es
+    description: This API exposes endpoints to manage the IN2 Blockchain Connector component.
