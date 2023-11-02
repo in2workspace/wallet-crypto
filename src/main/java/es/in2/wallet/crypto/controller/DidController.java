@@ -7,13 +7,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
-
 import java.util.Objects;
 
 @RestController
@@ -33,18 +30,22 @@ public class DidController {
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "201",
-                    description = "Success",
-                    content = @Content(mediaType = "application/json")
+                    description = "Success"
             ),
             @ApiResponse(
                     responseCode = "500",
-                    description = "Internal Server Error",
-                    content = @Content(mediaType = "application/json")
+                    description = "Internal Server Error"
             )
     })
-    public Mono<String> createDidKey() {
-        return Objects.requireNonNull(customDidKeyService.createDidKey());
+    public Mono<Void> createDidKey(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader){
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            String token = authorizationHeader.substring(7);
+            return customDidKeyService.createDidKey(token);
+        } else {
+            return Mono.error(new IllegalArgumentException("Invalid Authorization header"));
+        }
     }
+
 
     @PostMapping("/key/jwk-jcs-pub")
     @ResponseStatus(HttpStatus.CREATED)

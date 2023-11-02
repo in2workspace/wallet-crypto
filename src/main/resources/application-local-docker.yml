@@ -1,47 +1,34 @@
 # Spring Configuration
 spring:
   application:
-    name: spring-ms-skeleton
-  profiles:
-    active: test
-  security:
-    user:
-      name: in2admin
-      password: in2pass
+    name: wallet-crypto
 
 # Server Configuration
 server:
-  port: 8081
+  port: ${SERVER_PORT}
 
 # Logging Configuration
 logging:
   level:
-    org.springframework.security: INFO
-    es.in2.dome.blockchain.connector: DEBUG
+    es.in2.wallet.crypto.service: DEBUG
 
-# Actuator Configuration
+wallet-data:
+  url: ${WALLET_DATA_URL}
+
 management:
   endpoints:
     enabled-by-default: false
     web:
       exposure:
-        include: health, info, loggers, metrics
+        include: health
       base-path: /
       path-mapping:
         health: health
-        info: info
-        loggers: loggers
-        metrics: metrics
   endpoint:
     health:
       enabled: true
       show-details: always
-    loggers:
-      enabled: true
-    metrics:
-      enabled: true
 
-# Documentation Configuration
 springdoc:
   api-docs:
     path: /api-docs
@@ -52,10 +39,10 @@ springdoc:
 
 openapi:
   server:
-    url: http://localhost:8081
-    description: Spring MS Skeleton API
+    url: ${APP_URL_API}
+    description: Spring Wallet Crypto API
   info:
-    title: IN2 <insert name> project
+    title: IN2 Wallet Crypto project
     version: 0.0.1
     termsOfService: $apiUrl/terms-of-service
     license:
@@ -65,4 +52,4 @@ openapi:
       email: example@in2.es
       name: IN2
       url: https://in2.es
-    description: This API exposes endpoints to manage the IN2 Blockchain Connector component.
+    description: This API exposes endpoints to manage the IN2 Wallet Crypto.

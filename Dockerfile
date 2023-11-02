@@ -16,4 +16,4 @@ RUN if [ "$SKIP_TESTS" = "true" ]; then \
 FROM eclipse-temurin:17.0.8.1_1-jre-jammy
 WORKDIR /app
 COPY --from=TEMP_BUILD /home/gradle/src/build/libs/*.jar /app/
-ENTRYPOINT ["java", "-jar", "/app/skeleton-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-jar", "/app/wallet-crypto-0.0.1-SNAPSHOT.jar"]
