@@ -1,6 +1,7 @@
 package es.in2.wallet.crypto.controller;
 
 import es.in2.wallet.crypto.service.CustomDidKeyService;
+import es.in2.wallet.crypto.service.DidServiceFacade;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -19,10 +20,11 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class DidController {
 
+    private final DidServiceFacade didServiceFacade;
     private final CustomDidKeyService customDidKeyService;
 
     @PostMapping("/key")
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.OK)
     @Operation(
             summary = "Create DID Key",
             description = "Create a DID Key."
@@ -30,17 +32,19 @@ public class DidController {
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "201",
-                    description = "Success"
+                    description = "Success",
+                    content = @Content(mediaType = "application/json")
             ),
             @ApiResponse(
                     responseCode = "500",
-                    description = "Internal Server Error"
+                    description = "Internal Server Error",
+                    content = @Content(mediaType = "application/json")
             )
     })
-    public Mono<Void> createDidKey(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader){
+    public Mono<String> createDidKey(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader){
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             String token = authorizationHeader.substring(7);
-            return customDidKeyService.createDidKey(token);
+            return didServiceFacade.createDidKeyAndPersistIntoWalletData(token);
         } else {
             return Mono.error(new IllegalArgumentException("Invalid Authorization header"));
         }

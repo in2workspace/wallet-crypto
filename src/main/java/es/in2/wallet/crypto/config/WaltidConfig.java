@@ -13,5 +13,4 @@ public class WaltidConfig {
     public void instanceServiceMatrix() {
         new ServiceMatrix("service-matrix.properties");
     }
-
 }

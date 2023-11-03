@@ -1,46 +1,35 @@
 package es.in2.wallet.crypto.service;
 
 import es.in2.wallet.crypto.service.impl.CustomDidKeyServiceImpl;
-import es.in2.wallet.crypto.util.ApplicationUtils;
 import id.walt.crypto.KeyAlgorithm;
 import id.walt.crypto.KeyId;
 import id.walt.model.Did;
 import id.walt.model.DidMethod;
+import id.walt.servicematrix.ServiceMatrix;
 import id.walt.services.did.DidKeyCreateOptions;
 import id.walt.services.did.DidService;
 import id.walt.services.key.KeyService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.ActiveProfiles;
+import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import reactor.core.publisher.Mono;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.*;
 
-@SpringBootTest
-@ActiveProfiles("test")
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+@WebFluxTest(CustomDidKeyServiceImpl.class)
 class CustomDidKeyServiceImplTest {
 
-    @Autowired
     private CustomDidKeyServiceImpl customDidKeyService;
 
-    @MockBean
-    private ApplicationUtils applicationUtils;
-
-    @Value("${wallet-data.url}")
-    private String walletDataUrl;
     private KeyService keyService;
     private DidService didService;
 
 
     @BeforeEach
     public void setUp() {
-        customDidKeyService = new CustomDidKeyServiceImpl(applicationUtils,walletDataUrl);
+        new ServiceMatrix("service-matrix.properties");
+        customDidKeyService = new CustomDidKeyServiceImpl();
         keyService = KeyService.Companion.getService();
         didService = DidService.INSTANCE;
     }
@@ -92,15 +81,13 @@ class CustomDidKeyServiceImplTest {
         Did loaded = didService.load(did);
         assertEquals(did, loaded.getId());
     }
-
     @Test
     void createDidKey() {
-        Mockito.when(applicationUtils.postRequest(eq(walletDataUrl), anyList(), anyString()))
-                .thenReturn(Mono.empty());
-        String userToken = "test-token";
-        customDidKeyService.createDidKey(userToken).block();
-
-        Mockito.verify(applicationUtils).postRequest(eq(walletDataUrl), anyList(), anyString());
+        Mono<String> mono = customDidKeyService.createDid();
+        mono.subscribe(result -> {
+            Did loaded = didService.load(result);
+            assertEquals(result, loaded.getId());
+        });
     }
 
     @Test
