@@ -1,13 +1,19 @@
 # Spring Configuration
 spring:
   application:
-    name: spring-ms-skeleton
+    name: wallet-crypto
   profiles:
     active: default
   security:
     user:
       name: in2admin
       password: in2pass
+  # Vault
+  cloud:
+    vault:
+      host: "http://localhost"
+      port: 8200
+      token: "00000000-0000-0000-0000-000000000000"
 
 # Server Configuration
 server:
@@ -49,12 +55,6 @@ springdoc:
     path: /spring-ui
     tags-sorter: alpha
     operations-sorter: method
-
-# Vault
-vault:
-  host: "http://localhost"
-  port: 8200
-  token: "00000000-0000-0000-0000-000000000000"
 
 openapi:
   server:

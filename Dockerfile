@@ -5,6 +5,8 @@ ARG SKIP_TESTS=false
 COPY build.gradle settings.gradle /home/gradle/src/
 COPY src /home/gradle/src/src
 COPY gradle /home/gradle/src/gradle
+COPY configs /home/gradle/src/configs
+COPY service-matrix.properties /home/gradle/src/
 WORKDIR /home/gradle/src
 RUN if [ "$SKIP_TESTS" = "true" ]; then \
     gradle build --no-daemon -x test; \
@@ -15,5 +17,7 @@ RUN if [ "$SKIP_TESTS" = "true" ]; then \
 # build image
 FROM eclipse-temurin:17.0.8.1_1-jre-jammy
 WORKDIR /app
+COPY --from=TEMP_BUILD /home/gradle/src/service-matrix.properties /app/
+COPY --from=TEMP_BUILD /home/gradle/src/configs /app/configs
 COPY --from=TEMP_BUILD /home/gradle/src/build/libs/*.jar /app/
 ENTRYPOINT ["java", "-jar", "/app/skeleton-0.0.1-SNAPSHOT.jar"]
