@@ -15,7 +15,7 @@ RUN if [ "$SKIP_TESTS" = "true" ]; then \
   fi
 
 # build image
-FROM eclipse-temurin:17.0.8.1_1-jre-jammy
+FROM openjdk:17-alpine
 WORKDIR /app
 COPY --from=TEMP_BUILD /home/gradle/src/build/libs/*.jar /app/
 COPY --from=TEMP_BUILD /home/gradle/src/service-matrix.properties /app/
