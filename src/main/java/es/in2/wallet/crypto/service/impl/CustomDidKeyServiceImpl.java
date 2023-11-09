@@ -18,7 +18,7 @@ import reactor.core.publisher.Mono;
 public class CustomDidKeyServiceImpl implements CustomDidKeyService {
 
     @Override
-    public Mono<String> createDid() {
+    public Mono<String> createDidKey() {
         KeyId keyId = KeyService.Companion.getService().generate(KeyAlgorithm.ECDSA_Secp256k1);
         return Mono.just(DidService.INSTANCE.create(DidMethod.key, keyId.getId(), null))
                 .doOnSuccess(result -> log.info("Success: {}", result))

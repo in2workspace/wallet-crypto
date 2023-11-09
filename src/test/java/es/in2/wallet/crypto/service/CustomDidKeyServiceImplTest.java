@@ -83,7 +83,7 @@ class CustomDidKeyServiceImplTest {
     }
     @Test
     void createDidKey() {
-        Mono<String> mono = customDidKeyService.createDid();
+        Mono<String> mono = customDidKeyService.createDidKey();
         mono.subscribe(result -> {
             Did loaded = didService.load(result);
             assertEquals(result, loaded.getId());

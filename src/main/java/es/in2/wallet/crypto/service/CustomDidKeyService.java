@@ -4,7 +4,7 @@ import reactor.core.publisher.Mono;
 
 public interface CustomDidKeyService {
 
-    Mono<String> createDid();
+    Mono<String> createDidKey();
     Mono<String> createDidKeyJwkJcsPub();
 
 }

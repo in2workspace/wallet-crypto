@@ -20,7 +20,7 @@ public class DidServiceFacadeImpl implements DidServiceFacade {
     @Override
     public Mono<String> createDidKeyAndPersistIntoWalletData(String token) {
         // create did:key
-        return customDidKeyService.createDid()
+        return customDidKeyService.createDidKey()
                 // save did:key
                 .flatMap(did -> walletDataCommunicationService.saveDidKey(token, did).thenReturn(did))
                 .doOnSuccess(did -> log.info("DID created and saved successfully: {}", did))
