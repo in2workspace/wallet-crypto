@@ -1,7 +1,7 @@
 # Spring Configuration
 spring:
   application:
-    name: spring-ms-skeleton
+    name: wallet-crypto
   profiles:
     active: prod
   security:
