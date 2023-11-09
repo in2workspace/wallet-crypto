@@ -5,6 +5,7 @@ ARG SKIP_TESTS=false
 COPY build.gradle settings.gradle /home/gradle/src/
 COPY src /home/gradle/src/src
 COPY gradle /home/gradle/src/gradle
+COPY config/checkstyle /home/gradle/src/config/checkstyle
 COPY waltid/configs /home/gradle/src/waltid/configs
 COPY service-matrix.properties /home/gradle/src/
 WORKDIR /home/gradle/src

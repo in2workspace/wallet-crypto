@@ -16,5 +16,4 @@ class WalletCryptoApplicationTest {
         assertEquals(expected, actual);
     }
 
-	
 }
