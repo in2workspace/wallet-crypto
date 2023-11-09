@@ -47,6 +47,7 @@ public class OpenApiConfig {
     @Value("${openapi.info.description}")
     private String infoDescription;
 
+
     @Bean
     public OpenAPI myOpenAPI() {
         // Defining servers

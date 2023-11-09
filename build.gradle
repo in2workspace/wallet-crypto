@@ -62,8 +62,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 
 	// Vault
-	implementation 'org.springframework.cloud:spring-cloud-starter-vault-config'
-	testImplementation 'org.springframework.data:spring-data-keyvalue:3.1.5'
+//	implementation 'org.springframework.cloud:spring-cloud-starter-vault-config'
+//	testImplementation 'org.springframework.data:spring-data-keyvalue:3.1.5'
 
 	// Validation
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
@@ -82,6 +82,9 @@ dependencies {
 	// Logback
 	implementation 'ch.qos.logback:logback-classic:1.4.11'
 	implementation 'net.logstash.logback:logstash-logback-encoder:7.4'
+
+	// nimbus-jjwt
+	implementation("com.nimbusds:nimbus-jose-jwt:9.30.2")
 
 	// Walt.id
 	implementation 'id.walt:waltid-ssikit:1.2309221938.0'

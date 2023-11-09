@@ -1,19 +1,17 @@
 package es.in2.wallet.crypto.controller;
 
 import es.in2.wallet.crypto.service.CustomDidKeyService;
+import es.in2.wallet.crypto.service.DidServiceFacade;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
-
 import java.util.Objects;
 
 @RestController
@@ -22,10 +20,11 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class DidController {
 
+    private final DidServiceFacade didServiceFacade;
     private final CustomDidKeyService customDidKeyService;
 
     @PostMapping("/key")
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.OK)
     @Operation(
             summary = "Create DID Key",
             description = "Create a DID Key."
@@ -42,9 +41,15 @@ public class DidController {
                     content = @Content(mediaType = "application/json")
             )
     })
-    public Mono<String> createDidKey() {
-        return Objects.requireNonNull(customDidKeyService.createDidKey());
+    public Mono<String> createDidKey(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader){
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            String token = authorizationHeader.substring(7);
+            return didServiceFacade.createDidKeyAndPersistIntoWalletData(token);
+        } else {
+            return Mono.error(new IllegalArgumentException("Invalid Authorization header"));
+        }
     }
+
 
     @PostMapping("/key/jwk-jcs-pub")
     @ResponseStatus(HttpStatus.CREATED)

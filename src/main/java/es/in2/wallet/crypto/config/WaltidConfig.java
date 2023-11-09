@@ -15,5 +15,4 @@ public class WaltidConfig {
     public void instanceServiceMatrix() {
         new ServiceMatrix(SERVICE_MATRIX);
     }
-
 }

@@ -5,25 +5,30 @@ import id.walt.crypto.KeyAlgorithm;
 import id.walt.crypto.KeyId;
 import id.walt.model.Did;
 import id.walt.model.DidMethod;
+import id.walt.servicematrix.ServiceMatrix;
 import id.walt.services.did.DidKeyCreateOptions;
 import id.walt.services.did.DidService;
 import id.walt.services.key.KeyService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import reactor.core.publisher.Mono;
+
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@SpringBootTest
+@WebFluxTest(CustomDidKeyServiceImpl.class)
 class CustomDidKeyServiceImplTest {
 
     private CustomDidKeyServiceImpl customDidKeyService;
+
     private KeyService keyService;
     private DidService didService;
 
+
     @BeforeEach
     public void setUp() {
+        new ServiceMatrix("service-matrix.properties");
         customDidKeyService = new CustomDidKeyServiceImpl();
         keyService = KeyService.Companion.getService();
         didService = DidService.INSTANCE;
@@ -76,7 +81,6 @@ class CustomDidKeyServiceImplTest {
         Did loaded = didService.load(did);
         assertEquals(did, loaded.getId());
     }
-
     @Test
     void createDidKey() {
         Mono<String> mono = customDidKeyService.createDidKey();

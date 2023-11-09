@@ -5,7 +5,8 @@ ARG SKIP_TESTS=false
 COPY build.gradle settings.gradle /home/gradle/src/
 COPY src /home/gradle/src/src
 COPY gradle /home/gradle/src/gradle
-COPY configs /home/gradle/src/configs
+COPY config/checkstyle /home/gradle/src/config/checkstyle
+COPY waltid/configs /home/gradle/src/waltid/configs
 COPY service-matrix.properties /home/gradle/src/
 WORKDIR /home/gradle/src
 RUN if [ "$SKIP_TESTS" = "true" ]; then \
@@ -17,7 +18,7 @@ RUN if [ "$SKIP_TESTS" = "true" ]; then \
 # build image
 FROM openjdk:17-alpine
 WORKDIR /app
-COPY --from=TEMP_BUILD /home/gradle/src/service-matrix.properties /app/
-COPY --from=TEMP_BUILD /home/gradle/src/configs /app/configs
 COPY --from=TEMP_BUILD /home/gradle/src/build/libs/*.jar /app/
-ENTRYPOINT ["java", "-jar", "/app/wallet-crypto-0.0.1.jar"]
+COPY --from=TEMP_BUILD /home/gradle/src/service-matrix.properties /app/
+COPY --from=TEMP_BUILD /home/gradle/src/waltid/configs /app/waltid/configs
+ENTRYPOINT ["java", "-jar", "/app/wallet-crypto-0.0.1-SNAPSHOT.jar"]
