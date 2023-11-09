@@ -2,6 +2,15 @@
 spring:
   application:
     name: wallet-crypto
+  cloud:
+    vault:
+      kv:
+        enabled: true
+      authentication: token
+      token:
+      scheme: http
+      host: localhost
+      port: 8200
 
 # Server Configuration
 server:
