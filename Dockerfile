@@ -5,6 +5,7 @@ ARG SKIP_TESTS=false
 COPY build.gradle settings.gradle /home/gradle/src/
 COPY src /home/gradle/src/src
 COPY gradle /home/gradle/src/gradle
+COPY config/checkstyle /home/gradle/src/config/checkstyle
 COPY waltid/configs /home/gradle/src/waltid/configs
 COPY service-matrix.properties /home/gradle/src/
 WORKDIR /home/gradle/src
@@ -15,7 +16,7 @@ RUN if [ "$SKIP_TESTS" = "true" ]; then \
   fi
 
 # build image
-FROM eclipse-temurin:17.0.8.1_1-jre-jammy
+FROM openjdk:17-alpine
 WORKDIR /app
 COPY --from=TEMP_BUILD /home/gradle/src/build/libs/*.jar /app/
 COPY --from=TEMP_BUILD /home/gradle/src/service-matrix.properties /app/

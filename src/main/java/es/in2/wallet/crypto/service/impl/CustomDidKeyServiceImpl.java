@@ -18,11 +18,11 @@ import reactor.core.publisher.Mono;
 public class CustomDidKeyServiceImpl implements CustomDidKeyService {
 
     @Override
-    public Mono<String> createDid() {
-        KeyId keyId = KeyService.Companion.getService().generate(KeyAlgorithm.ECDSA_Secp256k1);
-        return Mono.just(DidService.INSTANCE.create(DidMethod.key, keyId.getId(), null))
-                .doOnSuccess(result -> log.info("Success: {}", result))
-                .doOnError(throwable -> log.error("Error: {}", throwable.getMessage()));
+    public Mono<String> createDidKey(KeyId keyId) {
+        return Mono.just(keyId)
+                .flatMap(kid -> Mono.just(DidService.INSTANCE.create(DidMethod.key, kid.getId(), null)))
+                .doOnSuccess(did -> log.info("DID created successfully: {}", did))
+                .doOnError(throwable -> log.error("Error creating DID: {}", throwable.getMessage()));
     }
 
     @Override

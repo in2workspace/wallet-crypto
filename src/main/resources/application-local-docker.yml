@@ -2,6 +2,15 @@
 spring:
   application:
     name: wallet-crypto
+  cloud:
+    vault:
+      kv:
+        enabled: ${VAULT_KV_ENABLED}
+      authentication: ${VAULT_AUTHENTICATION}
+      token: ${VAULT_TOKEN}
+      scheme: ${VAULT_SCHEME}
+      host: ${VAULT_HOST}
+      port: ${VAULT_PORT}
 
 # Server Configuration
 server:
@@ -20,14 +29,21 @@ management:
     enabled-by-default: false
     web:
       exposure:
-        include: health
+        include: health, info, loggers, metrics
       base-path: /
       path-mapping:
         health: health
+        info: info
+        loggers: loggers
+        metrics: metrics
   endpoint:
     health:
       enabled: true
       show-details: always
+    loggers:
+      enabled: true
+    metrics:
+      enabled: true
 
 springdoc:
   api-docs:

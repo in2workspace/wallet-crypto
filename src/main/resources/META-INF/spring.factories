@@ -1,1 +1,0 @@
-org.springframework.boot.env.EnvironmentPostProcessor=es.in2.wallet.crypto.config.VaultEnvironmentPostProcessor

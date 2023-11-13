@@ -7,10 +7,10 @@ spring:
       kv:
         enabled: true
       authentication: token
-      token:
+      token: hvs.zLCLazlSdZ6J3UYDbJpQ8RFd
       scheme: http
       host: localhost
-      port: 8200
+      port: 8201
 
 # Server Configuration
 server:
@@ -29,14 +29,21 @@ management:
     enabled-by-default: false
     web:
       exposure:
-        include: health
+        include: health, info, loggers, metrics
       base-path: /
       path-mapping:
         health: health
+        info: info
+        loggers: loggers
+        metrics: metrics
   endpoint:
     health:
       enabled: true
       show-details: always
+    loggers:
+      enabled: true
+    metrics:
+      enabled: true
 
 springdoc:
   api-docs:
