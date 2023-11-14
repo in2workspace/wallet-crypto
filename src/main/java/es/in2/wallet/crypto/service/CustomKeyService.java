@@ -5,5 +5,5 @@ import reactor.core.publisher.Mono;
 
 public interface CustomKeyService {
 
-    Mono<KeyDetails> createKeyId();
+    Mono<KeyDetails> createKeyIdAndExportPrivateKey();
 }

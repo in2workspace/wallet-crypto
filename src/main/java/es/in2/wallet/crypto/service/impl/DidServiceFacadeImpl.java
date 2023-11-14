@@ -20,7 +20,7 @@ public class DidServiceFacadeImpl implements DidServiceFacade {
     @Override
     public Mono<String> createDidKeyAndPersistIntoWalletDataAndVault(String token) {
         // Step 1: Generate KeyId using CustomKeyService
-        return customKeyService.createKeyId()
+        return customKeyService.createKeyIdAndExportPrivateKey()
                 // Step 2: Create DID using KeyId from CustomDidKeyService
                 .flatMap(keyDetails -> customDidKeyService.createDidKey(keyDetails.getKeyId())
                         // Step 3: Save did and KeyId in VaultService

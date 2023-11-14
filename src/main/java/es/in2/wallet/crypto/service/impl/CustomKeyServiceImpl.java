@@ -17,7 +17,7 @@ import reactor.core.publisher.Mono;
 @Slf4j
 public class CustomKeyServiceImpl implements CustomKeyService {
     @Override
-    public Mono<KeyDetails> createKeyId() {
+    public Mono<KeyDetails> createKeyIdAndExportPrivateKey() {
         return Mono.fromCallable(() -> {
             KeyService keyService = KeyService.Companion.getService();
             KeyId keyId = keyService.generate(KeyAlgorithm.ECDSA_Secp256k1);

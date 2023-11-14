@@ -31,7 +31,7 @@ class DidControllerTest {
     }
 
     @Test
-    void testCreateDid() {
+    void testCreateDidKey() {
         String token = "token";
 
         Mockito.when(didServiceFacade.createDidKeyAndPersistIntoWalletDataAndVault(token))
