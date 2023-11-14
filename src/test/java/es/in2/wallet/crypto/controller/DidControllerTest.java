@@ -34,7 +34,7 @@ class DidControllerTest {
     void testCreateDid() {
         String token = "token";
 
-        Mockito.when(didServiceFacade.createDidKeyAndPersistIntoWalletData(token))
+        Mockito.when(didServiceFacade.createDidKeyAndPersistIntoWalletDataAndVault(token))
                 .thenReturn(Mono.just("did:key:1234"));
 
         webClient.post()

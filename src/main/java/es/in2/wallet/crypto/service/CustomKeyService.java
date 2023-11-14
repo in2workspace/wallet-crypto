@@ -1,8 +1,9 @@
 package es.in2.wallet.crypto.service;
 
-import id.walt.crypto.KeyId;
+import es.in2.wallet.crypto.model.KeyDetails;
 import reactor.core.publisher.Mono;
 
 public interface CustomKeyService {
-    Mono<KeyId> createKeyId();
+
+    Mono<KeyDetails> createKeyId();
 }

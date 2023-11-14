@@ -22,9 +22,9 @@ public class DidServiceFacadeImpl implements DidServiceFacade {
         // Step 1: Generate KeyId using CustomKeyService
         return customKeyService.createKeyId()
                 // Step 2: Create DID using KeyId from CustomDidKeyService
-                .flatMap(keyId -> customDidKeyService.createDidKey(keyId)
+                .flatMap(keyDetails -> customDidKeyService.createDidKey(keyDetails.getKeyId())
                         // Step 3: Save did and KeyId in VaultService
-                        .flatMap(did -> vaultService.saveSecret(did, keyId.getId())
+                        .flatMap(did -> vaultService.saveSecret(did, keyDetails.getPrivateKey())
                                 // Step 4: Call WalletDataCommunicationService to persist the did
                                 .then(walletDataCommunicationService.saveDidKey(token, did))
                                 .thenReturn(did)))
