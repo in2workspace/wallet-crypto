@@ -2,6 +2,15 @@
 spring:
   application:
     name: wallet-crypto
+  cloud:
+    vault:
+      kv:
+        enabled: ${VAULT_KV_ENABLED}
+      authentication: ${VAULT_AUTHENTICATION}
+      token: ${VAULT_TOKEN}
+      scheme: ${VAULT_SCHEME}
+      host: ${VAULT_HOST}
+      port: ${VAULT_PORT}
 
 # Server Configuration
 server:

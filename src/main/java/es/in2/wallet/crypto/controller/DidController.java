@@ -44,7 +44,7 @@ public class DidController {
     public Mono<String> createDidKey(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader){
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             String token = authorizationHeader.substring(7);
-            return didServiceFacade.createDidKeyAndPersistIntoWalletData(token);
+            return didServiceFacade.createDidKeyAndPersistIntoWalletDataAndVault(token);
         } else {
             return Mono.error(new IllegalArgumentException("Invalid Authorization header"));
         }

@@ -18,7 +18,7 @@ import reactor.core.publisher.Mono;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @WebFluxTest(CustomDidKeyServiceImpl.class)
-class CustomDidKeyServiceImplTest {
+class CustomDidServiceImplTest {
 
     private CustomDidKeyServiceImpl customDidKeyService;
 
@@ -83,7 +83,8 @@ class CustomDidKeyServiceImplTest {
     }
     @Test
     void createDidKey() {
-        Mono<String> mono = customDidKeyService.createDidKey();
+        KeyId keyId = keyService.generate(KeyAlgorithm.ECDSA_Secp256k1);
+        Mono<String> mono = customDidKeyService.createDidKey(keyId);
         mono.subscribe(result -> {
             Did loaded = didService.load(result);
             assertEquals(result, loaded.getId());

@@ -1,7 +1,9 @@
 package es.in2.wallet.crypto.service;
 
-public interface VaultService {
-    void addCredential();
+import reactor.core.publisher.Mono;
 
-    void getCredential();
+public interface VaultService {
+    Mono<Void> saveSecret(String did, String privateKeyString);
+    Mono<String> getSecret(String did);
+    Mono<Void> deleteSecret(String did);
 }
