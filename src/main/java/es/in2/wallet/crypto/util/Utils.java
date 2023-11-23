@@ -1,6 +1,5 @@
 package es.in2.wallet.crypto.util;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -20,7 +19,7 @@ public class Utils {
     public static final String PROCESS_ID = "ProcessId";
 
     public static String isNullOrBlank(String string) {
-        if(string == null || string.isBlank()) {
+        if (string == null || string.isBlank()) {
             return string;
         } else {
             throw new IllegalArgumentException("Parameter cannot be null or blank");

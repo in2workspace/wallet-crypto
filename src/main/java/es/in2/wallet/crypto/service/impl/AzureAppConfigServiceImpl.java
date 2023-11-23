@@ -16,18 +16,17 @@ import static es.in2.wallet.crypto.util.Utils.PROCESS_ID;
 public class AzureAppConfigServiceImpl implements AzureAppConfigService {
 
     private static final String AZURE_CONFIG_PREFIX = "/gencat.iep.verifier.vclogin.ms";
-    private static final String AZURE_CONFIG_PATH = "/key1";
     private static final String AZURE_CONFIG_LABEL = "dev";
 
     private final ConfigurationClient configurationClient;
 
     @Override
-    public Mono<String> getConfiguration() {
+    public Mono<String> getConfiguration(String key) {
         String processId = MDC.get(PROCESS_ID);
         return Mono.fromCallable(() -> {
                     try {
                         return configurationClient
-                                .getConfigurationSetting(AZURE_CONFIG_PREFIX + AZURE_CONFIG_PATH, AZURE_CONFIG_LABEL)
+                                .getConfigurationSetting(AZURE_CONFIG_PREFIX + key, AZURE_CONFIG_LABEL)
                                 .getValue();
                     } catch (Exception e) {
                         return "Communication with Key Vault failed: " + e;
