@@ -1,0 +1,50 @@
+{
+  "properties": [
+    {
+      "name": "app.secret-provider",
+      "type": "java.lang.String",
+      "description": "The secret provider to use."
+    },
+    {
+      "name": "hashicorp.vault.kvEnabled",
+      "type": "java.lang.String",
+      "description": "Whether to enable the Vault KV secrets engine."
+    },
+    {
+      "name": "hashicorp.vault.authentication",
+      "type": "java.lang.String",
+      "description": "The authentication method to use when connecting to Vault."
+    },
+    {
+      "name": "hashicorp.vault.token",
+      "type": "java.lang.String",
+      "description": "The Vault token to use when connecting to Vault."
+    },
+    {
+      "name": "hashicorp.vault.scheme",
+      "type": "java.lang.String",
+      "description": "The scheme to use when connecting to Vault."
+    },
+    {
+      "name": "hashicorp.vault.host",
+      "type": "java.lang.String",
+      "description": "The host to use when connecting to Vault."
+    },
+    {
+      "name": "hashicorp.vault.port",
+      "type": "java.lang.String",
+      "description": "The port to use when connecting to Vault."
+    },
+    {
+      "name": "azure.keyvault.vaultName",
+      "type": "java.lang.String",
+      "description": "The vault name to use when connecting to Azure Key Vault."
+    },
+    {
+      "name": "azure.keyvault.vaultUri",
+      "type": "java.lang.String",
+      "description": "The vault URI to use when connecting to Azure Key Vault."
+    }
+  ]
+}
+

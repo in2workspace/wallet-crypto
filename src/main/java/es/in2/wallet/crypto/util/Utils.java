@@ -1,24 +1,36 @@
 package es.in2.wallet.crypto.util;
 
-
+import ch.qos.logback.core.net.SyslogOutputStream;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
+
 import java.util.List;
 import java.util.Map;
 
-@Component
 @Slf4j
-public class ApplicationUtils {
-    private final WebClient webClient;
+@Component
+public class Utils {
 
-    public ApplicationUtils(WebClient.Builder webClientBuilder) {
-        this.webClient = webClientBuilder.build();
+    private static final WebClient webClient = WebClient.builder().build();
+
+    public static final String SERVICE_MATRIX = "service-matrix.properties";
+
+    public static final String BEARER_PREFIX = "Bearer ";
+
+    public static final String PROCESS_ID = "ProcessId";
+
+    public static String isNullOrBlank(String string) {
+        if(string == null || string.isBlank()) {
+            return string;
+        } else {
+            throw new IllegalArgumentException("Parameter cannot be null or blank");
+        }
     }
 
-    public Mono<String> getRequest(String url, List<Map.Entry<String, String>> headers) {
+    public static Mono<String> getRequest(String url, List<Map.Entry<String, String>> headers) {
         return webClient.get()
                 .uri(url)
                 .headers(httpHeaders -> headers.forEach(entry -> httpHeaders.add(entry.getKey(), entry.getValue())))
@@ -29,7 +41,7 @@ public class ApplicationUtils {
                 .doOnNext(response -> logCRUD(url, headers, "", response, "GET"));
     }
 
-    public Mono<String> postRequest(String url, List<Map.Entry<String, String>> headers, String body) {
+    public static Mono<String> postRequest(String url, List<Map.Entry<String, String>> headers, String body) {
         return webClient.post()
                 .uri(url)
                 .headers(httpHeaders -> headers.forEach(entry -> httpHeaders.add(entry.getKey(), entry.getValue())))
@@ -41,7 +53,7 @@ public class ApplicationUtils {
                 .doOnNext(response -> logCRUD(url, headers, body, response, "POST"));
     }
 
-    private void logCRUD(String url, List<Map.Entry<String, String>> headers, String requestBody, String responseBody, String method) {
+    public static void logCRUD(String url, List<Map.Entry<String, String>> headers, String requestBody, String responseBody, String method) {
         log.debug("********************************************************************************");
         log.debug(">>> METHOD: {}", method);
         log.debug(">>> URI: {}", url);
@@ -50,5 +62,5 @@ public class ApplicationUtils {
         log.debug("<<< BODY: {}", responseBody);
         log.debug("********************************************************************************");
     }
-}
 
+}

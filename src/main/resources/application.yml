@@ -1,32 +1,40 @@
 # Spring Configuration
 spring:
   application:
-    name: wallet-crypto
-
-# Server Configuration
-server:
-  port: 8081
+    name: Wallet Crypto
+  main:
+    web-application-type: reactive
+  cloud:
+    vault:
+      host: vault
+      port: 8201
+      authentication: token
+      token: hvs.IcpenQulHxdxbqImRcW0WwrU
+      scheme: http
+      kv:
+        enabled: true
 
 # Logging Configuration
 logging:
+  pattern:
+    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
   level:
-    es.in2.wallet.crypto.service: DEBUG
+    es.in2.blockchainconnector: DEBUG
 
-wallet-data:
-  url: http://localhost:8086/api/dids
-
+# Spring Management Configuration - Actuator
 management:
   endpoints:
     enabled-by-default: false
     web:
       exposure:
-        include: health, info, loggers, metrics
+        include: health, info, loggers, metrics, prometheus
       base-path: /
       path-mapping:
         health: health
         info: info
         loggers: loggers
         metrics: metrics
+        prometheus: prometheus
   endpoint:
     health:
       enabled: true
@@ -35,28 +43,50 @@ management:
       enabled: true
     metrics:
       enabled: true
+    prometheus:
+      enabled: true
 
+# SpringDoc Configuration - OpenAPI 3.0 Documentation & Swagger UI
 springdoc:
   api-docs:
     path: /api-docs
   swagger-ui:
-    path: /spring-ui
+    path: /swagger-ui.html
     tags-sorter: alpha
     operations-sorter: method
 
+# Server Configuration
+server:
+  port: 8080
+
+# Application Configuration
+app:
+  secret-provider:
+    name: hashicorp #hashicorp #azure
+
+# Application Configuration
 openapi:
   server:
-    url: http://localhost:8081
-    description: Spring Wallet Crypto API
+    url: http://localhost:8080
+    description: Test Environment
   info:
-    title: IN2 Wallet Crypto project
-    version: 0.0.1
-    termsOfService: $apiUrl/terms-of-service
+    title: Blockchain Connector API
+    version: 1.0.0-SNAPSHOT
+    description: Blockchain Connector Software Solution
+    termsOfService: https://example.com/terms-of-service
     license:
-      name: MIT License
-      url: https://choosealicense.com/licenses/mit/
+      name: Apache 2.0
+      url: https://www.apache.org/licenses/LICENSE-2.0.html
     contact:
-      email: example@in2.es
-      name: IN2
+      email: info@in2.es
+      name: IN2, Ingeniería de la Información
       url: https://in2.es
-    description: This API exposes endpoints to manage the IN2 Wallet Crypto.
+
+# Wallet Configuration
+wallet-data:
+  url: http://wallet-data:8086/api/dids
+
+# Azure Key Vault Configuration
+azure:
+  keyvault:
+    vaultUrl: https://java-keyvault-demo-kv.vault.azure.net/

@@ -1,8 +1,55 @@
-# Spring Boot Microservice Skeleton
+# Wallet Crypto Component
 
-This is a skeleton for a Spring Boot microservice. It is intended to be used as a starting point for new microservices.
+## Introduction
 
-### Pre-requisites
+The Wallet Crypto components is one of the services used by the Wallet Solution, and it is responsible to create, manage
+and store the cryptographic material used by the Wallet.
+
+## Key Components
+
+### Key Generation Service
+- Implement a robust private key generator.
+- Integrate security measures to protect the generation process.
+
+### Key Management Service
+- Establish functions for Key management, rotation, and revocation.
+- Implement security policies for DID administration.
+
+### DID Generation Service
+- Implement a DID generator.
+- Integrate security measures to protect the generation process.
+
+### DID Management Service
+- Establish functions for DID management, rotation, and revocation.
+- Implement security policies for DID administration.
+
+### Cryptographic Storage Service
+- Develop a secure system for private key storage.
+- Implement encryption mechanisms to ensure confidentiality.
+
+## Configurations
+
+The componente is able to work with 2 different Vault solutions; HashiCorp Vault as default, and Azure Key Vault.
+
+## Component Design
+
+Wallet Crypto is designed using a set of practices and patterns:
+
+### Creational patterns
+- Builder pattern
+
+### Structural patterns
+- Facade Pattern
+
+### Behavioral patterns
+
+
+***
+// todo
+
+## Specifications
+
+Wallet Crypto uses:
 - Java 17
 - Spring Boot 3.x
 - Gradle 8.x

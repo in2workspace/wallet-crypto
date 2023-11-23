@@ -1,40 +1,88 @@
 version: '3.8'
 services:
 
-#  wallet-crypto:
-#    image: wallet-crypto:latest
-#    environment:
-#      - SPRING_DATASOURCE_URL=jdbc:mysql://local-mysql:3306/test
-#      - SPRING_DATASOURCE_USERNAME=in2admin
-#      - SPRING_DATASOURCE_PASSWORD=in2pass
-#      # Agrega otras configuraciones de tu aplicación aquí
-#    depends_on:
-#      - local-mysql  # Asegura que el contenedor de MySQL esté funcionando antes de ejecutar tu aplicación
-
+  wallet-crypto:
+    container_name: wallet-crypto
+    image: wallet-crypto:latest
+    command:
+      - run
+    ports:
+      - "8081:8080"
+    networks:
+      - local
 
   vault:
     image: hashicorp/vault:latest
-    environment:
-      VAULT_DEV_ROOT_TOKEN_ID: "00000000-0000-0000-0000-000000000000"
+    container_name: vault
     ports:
-      - "8200:8200"
-    privileged: true
-
-  local-mysql:
-    container_name: local-mysql
-    image: mysql:8.0
-    command: --default-authentication-plugin=mysql_native_password
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: D83Wh$tb83D8
-      MYSQL_DATABASE: test
-      MYSQL_USER: in2admin
-      MYSQL_PASSWORD: in2pass
+      - "8201:8201"
     volumes:
-      - mysql-volume:/var/lib/mysql
+      - vault_logs:/vault/logs
+      - vault_file:/vault/file
+      - ./vault/init.sh:/vault/init.sh
+      - ./vault/config.json:/vault/config/config.json
+    cap_add:
+      - IPC_LOCK
+    command: /bin/sh /vault/init.sh
+    networks:
+      - local
+
+  wallet-data:
+    container_name: wallet-data
+    image: in2kizuna/wallet-data:v1.0.0-SNAPSHOT
+    environment:
+      SPRING_PROFILES_ACTIVE: "local-docker"
+      SERVER_PORT: "8086"
+      APP_URL_API: "http://wallet-data:8086"
+      APP_URL_ORION-LD-ADAPTER: "http://broker-adapter:8080"
+      APP_URL_WALLET-CRYPTO: "http://wallet-crypto:8081"
+    command:
+      - run
     ports:
-      - "3306:3306"
+      - "8086:8086"
+    links:
+      - broker-adapter
+    networks:
+      - local
+
+  broker-adapter:
+    container_name: broker-adapter
+    image: in2kizuna/broker-adapter:v1.0.0-SNAPSHOT
+    environment:
+      - "SPRING_PROFILES_ACTIVE=dev"
+    ports:
+      - "8082:8080"
+    volumes:
+      - ./wallet-config.yml:/src/main/resources/external-config.yml
+    networks:
+      - local
+
+  orion-ld:
+    container_name: orion-ld
+    image: fiware/orion-ld:latest
+    command: "-dbhost mongodb -port 1026"
+    links:
+      - mongodb
+    ports:
+      - "1026:1026"
+    networks:
+      - local
+
+  mongodb:
+    container_name: mongodb
+    image: mongo:4.4
+    command: "--nojournal"
+    volumes:
+      - orion_data:/data/db
+      - orion_db_config:/data/configdb
+    networks:
+      - local
+
+networks:
+    local:
 
 volumes:
-  vault-volume:
-  mysql-volume:
+  orion_data:
+  orion_db_config:
+  vault_logs:
+  vault_file:
