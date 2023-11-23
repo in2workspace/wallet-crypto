@@ -1,68 +1,84 @@
-//package es.in2.wallet.crypto.service.impl;
-//
-//import com.azure.security.keyvault.secrets.SecretClient;
-//import com.azure.security.keyvault.secrets.models.KeyVaultSecret;
-//import es.in2.wallet.crypto.exception.ParseErrorException;
-//import es.in2.wallet.crypto.service.AzureKeyVaultStorageService;
-//import es.in2.wallet.crypto.service.CryptographicStorageService;
-//import lombok.RequiredArgsConstructor;
-//import lombok.extern.slf4j.Slf4j;
-//import org.slf4j.MDC;
-//import org.springframework.beans.factory.annotation.Qualifier;
-//import org.springframework.stereotype.Service;
-//import reactor.core.publisher.Mono;
-//
-//import javax.security.auth.login.CredentialNotFoundException;
-//
-//import static es.in2.wallet.crypto.util.Utils.PROCESS_ID;
-//
-//@Slf4j
-//@Service
-//@RequiredArgsConstructor
-//@Qualifier("keyVaultStorageService")
-//public class AzureKeyVaultStorageServiceImpl implements AzureKeyVaultStorageService {
-//
-//    private final SecretClient secretClient;
-//
-//    @Override
-//    public Mono<Void> saveSecret(String key, String secret) {
-//        String processId = MDC.get(PROCESS_ID);
-//        return Mono.fromCallable(() ->
-//                        secretClient.setSecret(new KeyVaultSecret(key, secret)))
-//                .then()
-//                .doOnSuccess(voidValue -> log.info("ProcessID: {} - Secret saved successfully", processId))
-//                .onErrorResume(Exception.class, Mono::error);
-//    }
-//
-//    @Override
-//    public Mono<String> getSecretByKey(String key) {
-//        String processId = MDC.get(PROCESS_ID);
-//        return Mono.fromCallable(() ->
-//                        secretClient.getSecret(key))
-//                .flatMap(keyVaultSecret -> {
-//                    try {
-//                        // Read data from response to get the secret
-//                        if (keyVaultSecret != null && keyVaultSecret.getValue() != null) {
-//                            return Mono.just(keyVaultSecret.getValue());
-//                        } else {
-//                            return Mono.error(new CredentialNotFoundException("Secret not found"));
-//                        }
-//                    } catch (Exception e) {
-//                        return Mono.error(new ParseErrorException("Vault response could not be parsed"));
-//                    }
-//                })
-//                .doOnSuccess(voidValue -> log.info("ProcessID: {} - Secret retrieved successfully", processId))
-//                .doOnError(error -> log.error("Error retrieving secret: {}", error.getMessage(), error));
-//    }
-//
-//    @Override
-//    public Mono<Void> deleteSecretByKey(String key) {
-//        String processId = MDC.get(PROCESS_ID);
-//        return Mono.fromRunnable(() ->
-//                        secretClient.beginDeleteSecret(key))
-//                .then()
-//                .doOnSuccess(voidValue -> log.info("ProcessID: {} - Secret deleted successfully", processId))
-//                .onErrorResume(Exception.class, Mono::error);
-//    }
-//
-//}
+package es.in2.wallet.crypto.service.impl;
+
+import com.azure.security.keyvault.secrets.SecretClient;
+import com.azure.security.keyvault.secrets.models.KeyVaultSecret;
+import com.azure.security.keyvault.secrets.models.SecretProperties;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import es.in2.wallet.crypto.service.AzureKeyVaultStorageService;
+import jakarta.validation.constraints.NotNull;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.MDC;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Service;
+import reactor.core.publisher.Mono;
+
+import java.time.OffsetDateTime;
+
+import static es.in2.wallet.crypto.util.Utils.PROCESS_ID;
+
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class AzureKeyVaultStorageServiceImpl implements AzureKeyVaultStorageService {
+
+    private final SecretClient secretClient;
+
+
+    @Override
+    public Mono<Void> saveSecret(@NonNull String key, @NotNull String secret) {
+        String processId = MDC.get(PROCESS_ID);
+        log.info("Key: {} - Secret: {}", key, secret);
+        KeyVaultSecret newSecret = new KeyVaultSecret(
+                parseDidUriToAzureKeyVaultSecretName(key),
+                secret)
+                .setProperties(new SecretProperties()
+                        .setExpiresOn(OffsetDateTime.now().plusDays(60))
+                        .setContentType("application/json"));
+        return Mono.fromCallable(() ->
+                        secretClient.setSecret(newSecret))
+                .then()
+                .doOnSuccess(voidValue -> log.info("ProcessID: {} - Secret saved successfully", processId))
+                .onErrorResume(Exception.class, Mono::error);
+    }
+
+    @Override
+    public Mono<String> getSecretByKey(String key) {
+        String processId = MDC.get(PROCESS_ID);
+        return Mono.fromCallable(() -> {
+                    try {
+                        return secretClient.getSecret(parseDidUriToAzureKeyVaultSecretName(key)).getValue();
+                    } catch (Exception e) {
+                        return "Communication with Key Vault failed: " + e;
+                    }
+                })
+                .doOnSuccess(voidValue -> log.info("ProcessID: {} - Secret retrieved successfully", processId))
+                .onErrorResume(Exception.class, Mono::error);
+    }
+
+    @Override
+    public Mono<Void> deleteSecretByKey(String key) {
+        String processId = MDC.get(PROCESS_ID);
+        return Mono.fromRunnable(() -> {
+                    try {
+                        secretClient.beginDeleteSecret(parseDidUriToAzureKeyVaultSecretName(key));
+                    } catch (Exception e) {
+                        log.error("ProcessID: {} - Failed to delete secret: {}", processId, e.getMessage());
+                    }
+                })
+                .then()
+                .doOnSuccess(voidValue -> log.info("ProcessID: {} - Secret deleted successfully", processId))
+                .onErrorResume(Exception.class, Mono::error);
+    }
+
+    private String parseDidUriToAzureKeyVaultSecretName(String key) {
+        return key.replace(":", "-");
+    }
+
+    private String parseAzureKeyVaultSecretNameToDidUri(String key) {
+        return key.replace(":", "-");
+    }
+
+
+}

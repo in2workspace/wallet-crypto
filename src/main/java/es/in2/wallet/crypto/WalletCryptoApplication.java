@@ -18,13 +18,8 @@ import org.springframework.context.annotation.Bean;
 @Slf4j
 @SpringBootApplication
 @ConfigurationPropertiesScan(basePackages = {"es.in2.wallet.crypto"})
-public class WalletCryptoApplication implements CommandLineRunner {
-
-    private final KeyVaultClient keyVaultClient;
-
-    public WalletCryptoApplication(@Qualifier(value = "KeyVaultAutoconfiguredClient") KeyVaultAutoconfiguredClient keyVaultAutoconfiguredClient) {
-        this.keyVaultClient = keyVaultAutoconfiguredClient;
-    }
+public class WalletCryptoApplication {
+//public class WalletCryptoApplication implements CommandLineRunner {
 
     private static final ObjectMapper OBJECT_MAPPER =
             // sort alphabetically, to ensure same order when hashing.
@@ -34,11 +29,11 @@ public class WalletCryptoApplication implements CommandLineRunner {
         SpringApplication.run(WalletCryptoApplication.class, args);
     }
 
-    @Override
-    public void run(String... args) {
-        KeyVaultSecret keyVaultSecret = keyVaultClient.getSecret("kizuna-test");
-        log.info("Hey, our secret is here -> " + keyVaultSecret.getValue());
-    }
+//    @Override
+//    public void run(String... args) {
+//        KeyVaultSecret keyVaultSecret = keyVaultClient.getSecret("kizuna-test");
+//        log.info("Hey, our secret is here -> " + keyVaultSecret.getValue());
+//    }
 
     @Bean
     public ObjectMapper objectMapper() {

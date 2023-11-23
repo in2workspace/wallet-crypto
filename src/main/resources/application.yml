@@ -75,7 +75,7 @@ server:
 # Application Configuration
 app:
   secret-provider:
-    name: hashicorp #hashicorp #azure
+    name: azure #hashicorp #azure
     test: ${kizunaTest}
 
 # Application Configuration
