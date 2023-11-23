@@ -13,6 +13,6 @@ public record AppProperties(@NestedConfigurationProperty SecretProvider secretPr
 
     @ConstructorBinding
     public AppProperties(SecretProvider secretProvider) {
-        this.secretProvider = Optional.ofNullable(secretProvider).orElse(new SecretProvider(null));
+        this.secretProvider = Optional.ofNullable(secretProvider).orElse(new SecretProvider(null, null));
     }
 }

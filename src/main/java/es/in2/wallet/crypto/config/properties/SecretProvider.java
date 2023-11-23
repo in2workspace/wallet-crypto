@@ -1,4 +1,4 @@
 package es.in2.wallet.crypto.config.properties;
 
-public record SecretProvider(String name) {
+public record SecretProvider(String name, String test) {
 }

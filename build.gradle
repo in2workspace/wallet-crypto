@@ -89,6 +89,8 @@ dependencies {
 	implementation 'id.walt.servicematrix:WaltID-ServiceMatrix:1.1.3'
 
 	// Azure
+	implementation 'com.azure.spring:spring-cloud-azure-starter-appconfiguration:5.7.0'
+	implementation 'com.azure.spring:spring-cloud-azure-starter-keyvault-secrets:5.7.0'
 //	implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
 //	implementation 'com.azure.spring:spring-cloud-azure-starter'
 //	implementation 'com.azure.spring:spring-cloud-azure-starter-keyvault'
