@@ -1,7 +1,6 @@
 package es.in2.wallet.crypto.controller;
 
-import es.in2.wallet.crypto.service.DidGenerationService;
-import es.in2.wallet.crypto.service.DidServiceFacade;
+import es.in2.wallet.crypto.facade.DidServiceFacade;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -15,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
-import java.util.Objects;
 import java.util.UUID;
 
 import static es.in2.wallet.crypto.util.Utils.BEARER_PREFIX;
@@ -54,14 +52,13 @@ public class DidController {
         MDC.put(PROCESS_ID, processId);
         if (authorizationHeader != null && authorizationHeader.startsWith(BEARER_PREFIX)) {
             // Async Process Start
-            log.debug("ProcessID: {} - Create did:key", processId);
+            log.info("ProcessID: {} - Creating did:key...", processId);
             String token = authorizationHeader.replace(BEARER_PREFIX, "");
             return didServiceFacade.createDidKeyAndPersistIntoWalletDataAndVault(token)
                     .doFinally(signalType -> MDC.remove(PROCESS_ID));
         } else {
             log.error("ProcessID: {} - Invalid Authorization header", processId);
             return Mono.error(new IllegalArgumentException("Invalid Authorization header"));
-            //fixme Mono is returning an error, not Mono<String>
         }
     }
 

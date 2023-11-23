@@ -1,5 +1,6 @@
-package es.in2.wallet.crypto.service.impl;
+package es.in2.wallet.crypto.facade.impl;
 
+import es.in2.wallet.crypto.facade.DidServiceFacade;
 import es.in2.wallet.crypto.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

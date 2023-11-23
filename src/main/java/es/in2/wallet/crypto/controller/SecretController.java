@@ -1,7 +1,7 @@
 package es.in2.wallet.crypto.controller;
 
 import es.in2.wallet.crypto.exception.SecretNotFoundException;
-import es.in2.wallet.crypto.service.SecretServiceFacade;
+import es.in2.wallet.crypto.facade.SecretServiceFacade;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;

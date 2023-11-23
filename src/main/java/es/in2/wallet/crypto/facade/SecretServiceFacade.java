@@ -1,4 +1,4 @@
-package es.in2.wallet.crypto.service;
+package es.in2.wallet.crypto.facade;
 
 import reactor.core.publisher.Mono;
 

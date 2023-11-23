@@ -6,11 +6,10 @@ import com.fasterxml.jackson.databind.json.JsonMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
-@ConfigurationPropertiesScan( basePackages = {"es.in2.wallet.crypto"})
+@ConfigurationPropertiesScan(basePackages = {"es.in2.wallet.crypto"})
 public class WalletCryptoApplication {
 
     private static final ObjectMapper OBJECT_MAPPER =

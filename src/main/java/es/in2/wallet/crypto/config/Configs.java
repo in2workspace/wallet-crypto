@@ -20,13 +20,14 @@ public class Configs {
 
     @PostConstruct
     void init() {
+        String prefixMessage = " > {}";
         log.info("Configurations uploaded: ");
-        log.info("... {}", appProperties);
-        log.info("... {}", openApiProperties.server());
-        log.info("... {}", openApiProperties.info());
-        log.info("... {}", azureKeyVaultProperties);
-        log.info("... {}", hashiCorpVaultProperties);
-        log.info("... {}", walletDataProperties);
+        log.info(prefixMessage, appProperties);
+        log.info(prefixMessage, openApiProperties.server());
+        log.info(prefixMessage, openApiProperties.info());
+        log.info(prefixMessage, azureKeyVaultProperties);
+        log.info(prefixMessage, hashiCorpVaultProperties);
+        log.info(prefixMessage, walletDataProperties);
     }
 
 }

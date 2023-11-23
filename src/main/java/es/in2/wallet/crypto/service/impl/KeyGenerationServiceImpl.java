@@ -22,7 +22,7 @@ public class KeyGenerationServiceImpl implements KeyGenerationService {
     public Mono<KeyId> generateKey() {
         String processId = MDC.get("processId");
         return Mono.fromCallable(() -> keyService.generate(KeyAlgorithm.ECDSA_Secp256k1))
-                .doOnSuccess(keyId -> log.info("ProcessID: {} - Key generated: {}", processId, keyId.getId()))
+                .doOnSuccess(keyId -> log.debug("ProcessID: {} - Key generated: {}", processId, keyId.getId()))
                 .doOnError(throwable -> log.error("ProcessID: {} - Error generating KeyId and private key: {}", processId, throwable.getMessage()));
     }
 
@@ -33,7 +33,7 @@ public class KeyGenerationServiceImpl implements KeyGenerationService {
                     String privateKey = keyService.export(keyId.getId(), KeyFormat.JWK, KeyType.PRIVATE);
                     return KeyDetails.builder().privateKey(privateKey).keyId(keyId).build();
                 })
-                .doOnSuccess(keyDetails -> log.info("ProcessID: {} - Key exported: {}", processId, keyDetails.keyId().getId()))
+                .doOnSuccess(keyDetails -> log.debug("ProcessID: {} - Key exported: {}", processId, keyDetails.keyId().getId()))
                 .doOnError(throwable -> log.error("ProcessID: {} - Error exporting KeyId and private key: {}", processId, throwable.getMessage()));
     }
 

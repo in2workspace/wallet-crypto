@@ -1,7 +1,7 @@
 //package es.in2.wallet.crypto.controller;
 //
 //import es.in2.wallet.crypto.service.CustomDidKeyService;
-//import es.in2.wallet.crypto.service.DidServiceFacade;
+//import es.in2.wallet.crypto.service.facade.DidServiceFacade;
 //import org.junit.jupiter.api.BeforeEach;
 //import org.junit.jupiter.api.Test;
 //import org.mockito.Mockito;
