@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
@@ -28,7 +29,7 @@ public class DidController {
 
     private final DidServiceFacade didServiceFacade;
 
-    @PostMapping("/key")
+    @PostMapping(path = "/key")
     @ResponseStatus(HttpStatus.OK)
     @Operation(
             summary = "Create DID Key",
@@ -85,13 +86,11 @@ public class DidController {
         // Create a unique ID for the process
         String processId = UUID.randomUUID().toString();
         MDC.put(PROCESS_ID, processId);
-
         if (authorizationHeader != null && authorizationHeader.startsWith(BEARER_PREFIX)) {
             // Async Process Start
             log.debug("ProcessID: {} - Create did:key:jwk-jcs-pub", processId);
             String token = authorizationHeader.replace(BEARER_PREFIX, "");
-//            return didServiceFacade.createDidKeyAndPersistIntoWalletDataAndVault(token);
-            return null;
+            return didServiceFacade.createDidKeyJwkJcsPubAndPersistIntoWalletDataAndVault(token);
         } else {
             log.error("ProcessID: {} - Invalid Authorization header", processId);
             return Mono.error(new IllegalArgumentException("Invalid Authorization header"));

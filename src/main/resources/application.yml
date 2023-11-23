@@ -17,15 +17,8 @@ spring:
       keyvault:
         secret:
           endpoint: https://kv-shared-iep-dev.vault.azure.net/
-#      compatibility-verifier:
-#        enabled: false
-#        keyvault:
-#          secret:
-#            endpoint: https://kv-shared-iep-dev.vault.azure.net/
-#            property-sources[0]:
-#              name: kv-shared-iep-dev
-#              endpoint: https://kv-shared-iep-dev.vault.azure.net/
-#            property-source-enabled: true
+      appconfiguration:
+        endpoint: https://app-conf-shared-iep-dev.azconfig.io
 
 # Logging Configuration
 logging:
@@ -76,7 +69,6 @@ server:
 app:
   secret-provider:
     name: azure #hashicorp #azure
-    test: ${kizunaTest}
 
 # Application Configuration
 openapi:

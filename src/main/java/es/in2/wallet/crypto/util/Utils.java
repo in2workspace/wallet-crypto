@@ -15,11 +15,8 @@ import java.util.Map;
 public class Utils {
 
     private static final WebClient webClient = WebClient.builder().build();
-
     public static final String SERVICE_MATRIX = "service-matrix.properties";
-
     public static final String BEARER_PREFIX = "Bearer ";
-
     public static final String PROCESS_ID = "ProcessId";
 
     public static String isNullOrBlank(String string) {

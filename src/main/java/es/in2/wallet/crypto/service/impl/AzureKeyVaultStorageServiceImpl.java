@@ -3,14 +3,12 @@ package es.in2.wallet.crypto.service.impl;
 import com.azure.security.keyvault.secrets.SecretClient;
 import com.azure.security.keyvault.secrets.models.KeyVaultSecret;
 import com.azure.security.keyvault.secrets.models.SecretProperties;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import es.in2.wallet.crypto.service.AzureKeyVaultStorageService;
 import jakarta.validation.constraints.NotNull;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
@@ -75,10 +73,5 @@ public class AzureKeyVaultStorageServiceImpl implements AzureKeyVaultStorageServ
     private String parseDidUriToAzureKeyVaultSecretName(String key) {
         return key.replace(":", "-");
     }
-
-    private String parseAzureKeyVaultSecretNameToDidUri(String key) {
-        return key.replace(":", "-");
-    }
-
 
 }
