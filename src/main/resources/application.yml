@@ -74,11 +74,11 @@ app:
 openapi:
   server:
     url: http://localhost:8080
-    description: Test Environment
+    description: Wallet Crypto API
   info:
-    title: Blockchain Connector API
-    version: 1.0.0-SNAPSHOT
-    description: Blockchain Connector Software Solution
+    title: Wallet Crypto API
+    version: 1.0.0
+    description: Wallet Crypto Software Solution
     termsOfService: https://example.com/terms-of-service
     license:
       name: Apache 2.0

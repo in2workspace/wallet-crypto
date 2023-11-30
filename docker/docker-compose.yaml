@@ -29,7 +29,7 @@ services:
 
   wallet-data:
     container_name: wallet-data
-    image: in2kizuna/wallet-data:v1.0.0-SNAPSHOT
+    image: in2kizuna/wallet-data:v1.0.0
     environment:
       SPRING_PROFILES_ACTIVE: "local-docker"
       SERVER_PORT: "8086"
@@ -47,7 +47,7 @@ services:
 
   broker-adapter:
     container_name: broker-adapter
-    image: in2kizuna/broker-adapter:v1.0.0-SNAPSHOT
+    image: in2kizuna/broker-adapter:v1.0.0
     environment:
       - "SPRING_PROFILES_ACTIVE=dev"
     ports:
