@@ -1,4 +1,4 @@
-package es.in2.wallet.crypto.config.properties;
+package es.in2.wallet.crypto.configuration.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
@@ -23,4 +23,3 @@ public record OpenApiProperties(@NestedConfigurationProperty OpenApiServerProper
     }
 
 }
-

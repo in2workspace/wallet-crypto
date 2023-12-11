@@ -1,6 +1,5 @@
 package es.in2.wallet.crypto.service.impl;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import es.in2.wallet.crypto.domain.VaultSecretData;
 import es.in2.wallet.crypto.exception.ParseErrorException;
@@ -14,7 +13,7 @@ import reactor.core.publisher.Mono;
 
 import javax.security.auth.login.CredentialNotFoundException;
 
-import static es.in2.wallet.crypto.util.Utils.PROCESS_ID;
+import static es.in2.wallet.crypto.utils.Utils.PROCESS_ID;
 
 @Slf4j
 @Service

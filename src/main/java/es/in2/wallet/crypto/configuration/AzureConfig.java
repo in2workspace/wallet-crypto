@@ -1,12 +1,12 @@
-package es.in2.wallet.crypto.config;
+package es.in2.wallet.crypto.configuration;
 
 import com.azure.data.appconfiguration.ConfigurationClient;
 import com.azure.data.appconfiguration.ConfigurationClientBuilder;
 import com.azure.identity.DefaultAzureCredentialBuilder;
 import com.azure.security.keyvault.secrets.SecretClient;
 import com.azure.security.keyvault.secrets.SecretClientBuilder;
-import es.in2.wallet.crypto.config.properties.AzureAppConfigProperties;
-import es.in2.wallet.crypto.config.properties.AzureKeyVaultProperties;
+import es.in2.wallet.crypto.configuration.properties.AzureAppConfigProperties;
+import es.in2.wallet.crypto.configuration.properties.AzureKeyVaultProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,7 +29,7 @@ public class AzureConfig {
     @Bean
     public SecretClient secretClient() {
         return new SecretClientBuilder()
-                .vaultUrl(azureKeyVaultProperties.secret().endpoint())
+                .vaultUrl(azureKeyVaultProperties.azureKeyVaultSecretProperties().endpoint())
                 .credential(new DefaultAzureCredentialBuilder().build())
                 .buildClient();
     }

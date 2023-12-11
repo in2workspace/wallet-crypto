@@ -1,6 +1,6 @@
-package es.in2.wallet.crypto.config;
+package es.in2.wallet.crypto.configuration;
 
-import es.in2.wallet.crypto.config.properties.OpenApiProperties;
+import es.in2.wallet.crypto.configuration.properties.OpenApiProperties;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;

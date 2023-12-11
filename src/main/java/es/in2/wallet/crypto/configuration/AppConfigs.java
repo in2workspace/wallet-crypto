@@ -1,6 +1,6 @@
-package es.in2.wallet.crypto.config;
+package es.in2.wallet.crypto.configuration;
 
-import es.in2.wallet.crypto.config.properties.*;
+import es.in2.wallet.crypto.configuration.properties.*;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

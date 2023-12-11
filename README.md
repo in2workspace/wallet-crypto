@@ -69,7 +69,7 @@ wallet-crypto:
 ```
 **Important Note**:
 > The provided configuration is for connecting to HashiCorp Vault. If you wish to connect to Azure Key Vault instead, you will need to adjust the following environment variables:
-> - `SPRING_CLOUD_AZURE_KEYVAULT_SECRET_ENDPOINT`: Set this to your Azure Key Vault secret endpoint.
+> - `SPRING_CLOUD_AZURE_KEYVAULT_SECRET_ENDPOINT`: Set this to your Azure Key Vault azureKeyVaultSecretProperties endpoint.
 > - `SPRING_CLOUD_AZURE_KEYVAULT_APPCONFIGURATION`: Set
 
 ## Project Status

@@ -11,14 +11,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
 import java.util.UUID;
 
-import static es.in2.wallet.crypto.util.Utils.BEARER_PREFIX;
-import static es.in2.wallet.crypto.util.Utils.PROCESS_ID;
+import static es.in2.wallet.crypto.utils.Utils.BEARER_PREFIX;
+import static es.in2.wallet.crypto.utils.Utils.PROCESS_ID;
 
 @Tag(name = "DID Controller", description = "Endpoints for creating and managing DIDs")
 @Slf4j
