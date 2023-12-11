@@ -23,5 +23,5 @@ USER nonroot
 WORKDIR /app
 COPY --from=TEMP_BUILD /home/gradle/src/service-matrix.properties /app/
 COPY --from=TEMP_BUILD /home/gradle/src/waltid/configs /app/waltid/configs
-COPY --from=TEMP_BUILD /home/gradle/src/build/libs/*.jar /app/wallet-crypto
+COPY --from=TEMP_BUILD /home/gradle/src/build/libs/*.jar /app/wallet-crypto.jar
 ENTRYPOINT ["java", "-jar", "/app/wallet-crypto.jar"]
