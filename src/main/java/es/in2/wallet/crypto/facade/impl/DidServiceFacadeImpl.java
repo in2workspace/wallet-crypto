@@ -1,7 +1,6 @@
 package es.in2.wallet.crypto.facade.impl;
 
-import es.in2.wallet.crypto.config.properties.AppProperties;
-import es.in2.wallet.crypto.domain.KeyDetails;
+import es.in2.wallet.crypto.configuration.properties.AppProperties;
 import es.in2.wallet.crypto.facade.DidServiceFacade;
 import es.in2.wallet.crypto.service.*;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +9,7 @@ import org.slf4j.MDC;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
-import static es.in2.wallet.crypto.util.Utils.PROCESS_ID;
+import static es.in2.wallet.crypto.utils.Utils.PROCESS_ID;
 
 @Slf4j
 @Service
@@ -55,12 +54,12 @@ public class DidServiceFacadeImpl implements DidServiceFacade {
     }
 
     private Mono<String> saveSecretAndPersistDID(String did, String privateKey, String token) {
-        if (appProperties.secretProvider().name().equals("hashicorp")) {
+        if (appProperties.appSecretProviderProperties().name().equals("hashicorp")) {
             return hashiCorpVaultStorageService.saveSecret(did, privateKey)
                     // DID Persistence in Wallet Data
                     .then(dataStorageService.saveDidKey(token, did))
                     .thenReturn(did);
-        } else if (appProperties.secretProvider().name().equals("azure")) {
+        } else if (appProperties.appSecretProviderProperties().name().equals("azure")) {
             return azureKeyVaultStorageService.saveSecret(did, privateKey)
                     // DID Persistence in Wallet Data
                     .then(dataStorageService.saveDidKey(token, did))

@@ -6,19 +6,19 @@ spring:
     web-application-type: reactive
   cloud:
     vault:
-      host: vault
-      port: 8201
-      authentication: token
-      token: hvs.IcpenQulHxdxbqImRcW0WwrU
-      scheme: http
+      host:
+      port:
+      authentication:
+      token:
+      scheme:
       kv:
         enabled: true
     azure:
       keyvault:
         secret:
-          endpoint: https://kv-shared-iep-dev.vault.azure.net/
+          endpoint:
       appconfiguration:
-        endpoint: https://app-conf-shared-iep-dev.azconfig.io
+        endpoint:
 
 # Logging Configuration
 logging:
@@ -67,27 +67,27 @@ server:
 
 # Application Configuration
 app:
-  secret-provider:
-    name: azure #hashicorp #azure
+  secretProvider:
+    name:
 
 # Application Configuration
 openapi:
   server:
-    url: http://localhost:8080
-    description: Wallet Crypto API
+    url:
+    description:
   info:
-    title: Wallet Crypto API
-    version: 1.0.0
-    description: Wallet Crypto Software Solution
-    termsOfService: https://example.com/terms-of-service
+    title:
+    version:
+    description:
+    termsOfService:
     license:
-      name: Apache 2.0
-      url: https://www.apache.org/licenses/LICENSE-2.0.html
+      name:
+      url:
     contact:
-      email: info@in2.es
-      name: IN2, Ingeniería de la Información
-      url: https://in2.es
+      email:
+      name:
+      url:
 
 # Wallet Configuration
 wallet-data:
-  url: http://wallet-data:8086/api/dids
+  url:

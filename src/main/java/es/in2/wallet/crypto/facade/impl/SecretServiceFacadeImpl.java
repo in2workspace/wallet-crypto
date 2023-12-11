@@ -1,6 +1,6 @@
 package es.in2.wallet.crypto.facade.impl;
 
-import es.in2.wallet.crypto.config.properties.AppProperties;
+import es.in2.wallet.crypto.configuration.properties.AppProperties;
 import es.in2.wallet.crypto.facade.SecretServiceFacade;
 import es.in2.wallet.crypto.service.AzureKeyVaultStorageService;
 import es.in2.wallet.crypto.service.HashiCorpVaultStorageService;
@@ -10,7 +10,7 @@ import org.slf4j.MDC;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
-import static es.in2.wallet.crypto.util.Utils.PROCESS_ID;
+import static es.in2.wallet.crypto.utils.Utils.PROCESS_ID;
 
 @Slf4j
 @Service
@@ -24,11 +24,11 @@ public class SecretServiceFacadeImpl implements SecretServiceFacade {
     @Override
     public Mono<String> getSecretByDID(String did) {
         String processId = MDC.get(PROCESS_ID);
-        if (appProperties.secretProvider().name().equals("hashicorp")) {
+        if (appProperties.appSecretProviderProperties().name().equals("hashicorp")) {
             return hashiCorpVaultStorageService.getSecretByKey(did)
                     .doOnSuccess(secret -> log.info("ProcessId: {} - Secret retrieved successfully", processId))
                     .doOnError(Mono::error);
-        } else if (appProperties.secretProvider().name().equals("azure")) {
+        } else if (appProperties.appSecretProviderProperties().name().equals("azure")) {
             return azureKeyVaultStorageService.getSecretByKey(did)
                     .doOnSuccess(secret -> log.info("ProcessId: {} - Secret retrieved successfully", processId))
                     .doOnError(Mono::error);
@@ -40,11 +40,11 @@ public class SecretServiceFacadeImpl implements SecretServiceFacade {
     @Override
     public Mono<Void> deleteSecretByDID(String did) {
         String processId = MDC.get(PROCESS_ID);
-        if (appProperties.secretProvider().name().equals("hashicorp")) {
+        if (appProperties.appSecretProviderProperties().name().equals("hashicorp")) {
             return hashiCorpVaultStorageService.deleteSecretByKey(did)
                     .doOnSuccess(secret -> log.info("ProcessId: {} - Secret deleted successfully", processId))
                     .doOnError(Mono::error);
-        } else if (appProperties.secretProvider().name().equals("azure")) {
+        } else if (appProperties.appSecretProviderProperties().name().equals("azure")) {
             return azureKeyVaultStorageService.deleteSecretByKey(did)
                     .doOnSuccess(secret -> log.info("ProcessId: {} - Secret deleted successfully", processId))
                     .doOnError(Mono::error);

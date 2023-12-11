@@ -11,7 +11,7 @@ import reactor.core.publisher.Mono;
 
 import java.util.UUID;
 
-import static es.in2.wallet.crypto.util.Utils.PROCESS_ID;
+import static es.in2.wallet.crypto.utils.Utils.PROCESS_ID;
 
 @Slf4j
 @RestController

@@ -1,4 +1,4 @@
-package es.in2.wallet.crypto.util;
+package es.in2.wallet.crypto.utils;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @WebFluxTest(controllers = SecretController.class)
 @ExtendWith(SpringExtension.class)
-class SecretControllerTests {
+class AzureKeyVaultSecretPropertiesControllerTests {
 
     private static final String DID_PARAM = "did:example:123456";
 
