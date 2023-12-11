@@ -54,12 +54,12 @@ public class DidServiceFacadeImpl implements DidServiceFacade {
     }
 
     private Mono<String> saveSecretAndPersistDID(String did, String privateKey, String token) {
-        if (appProperties.appSecretProviderProperties().name().equals("hashicorp")) {
+        if (appProperties.secretProvider().name().equals("hashicorp")) {
             return hashiCorpVaultStorageService.saveSecret(did, privateKey)
                     // DID Persistence in Wallet Data
                     .then(dataStorageService.saveDidKey(token, did))
                     .thenReturn(did);
-        } else if (appProperties.appSecretProviderProperties().name().equals("azure")) {
+        } else if (appProperties.secretProvider().name().equals("azure")) {
             return azureKeyVaultStorageService.saveSecret(did, privateKey)
                     // DID Persistence in Wallet Data
                     .then(dataStorageService.saveDidKey(token, did))

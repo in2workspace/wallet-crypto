@@ -24,11 +24,11 @@ public class SecretServiceFacadeImpl implements SecretServiceFacade {
     @Override
     public Mono<String> getSecretByDID(String did) {
         String processId = MDC.get(PROCESS_ID);
-        if (appProperties.appSecretProviderProperties().name().equals("hashicorp")) {
+        if (appProperties.secretProvider().name().equals("hashicorp")) {
             return hashiCorpVaultStorageService.getSecretByKey(did)
                     .doOnSuccess(secret -> log.info("ProcessId: {} - Secret retrieved successfully", processId))
                     .doOnError(Mono::error);
-        } else if (appProperties.appSecretProviderProperties().name().equals("azure")) {
+        } else if (appProperties.secretProvider().name().equals("azure")) {
             return azureKeyVaultStorageService.getSecretByKey(did)
                     .doOnSuccess(secret -> log.info("ProcessId: {} - Secret retrieved successfully", processId))
                     .doOnError(Mono::error);
@@ -40,11 +40,11 @@ public class SecretServiceFacadeImpl implements SecretServiceFacade {
     @Override
     public Mono<Void> deleteSecretByDID(String did) {
         String processId = MDC.get(PROCESS_ID);
-        if (appProperties.appSecretProviderProperties().name().equals("hashicorp")) {
+        if (appProperties.secretProvider().name().equals("hashicorp")) {
             return hashiCorpVaultStorageService.deleteSecretByKey(did)
                     .doOnSuccess(secret -> log.info("ProcessId: {} - Secret deleted successfully", processId))
                     .doOnError(Mono::error);
-        } else if (appProperties.appSecretProviderProperties().name().equals("azure")) {
+        } else if (appProperties.secretProvider().name().equals("azure")) {
             return azureKeyVaultStorageService.deleteSecretByKey(did)
                     .doOnSuccess(secret -> log.info("ProcessId: {} - Secret deleted successfully", processId))
                     .doOnError(Mono::error);
