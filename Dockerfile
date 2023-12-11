@@ -1,6 +1,6 @@
-# temp build
 FROM docker.io/gradle:8.4.0 AS TEMP_BUILD
 ARG SKIP_TESTS=false
+COPY build.gradle settings.gradle /home/gradle/src/
 COPY src /home/gradle/src/src
 COPY config /home/gradle/src/config
 COPY docs /home/gradle/src/docs
