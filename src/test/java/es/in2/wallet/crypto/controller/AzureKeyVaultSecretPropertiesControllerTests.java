@@ -31,7 +31,7 @@ class AzureKeyVaultSecretPropertiesControllerTests {
         Mockito.when(secretServiceFacade.getSecretByDID(DID_PARAM))
                 .thenReturn(Mono.just(expectedSecret));
         webTestClient.get()
-                .uri("/api/v1/secrets?did={did}", DID_PARAM)
+                .uri("/api/v2/secrets?did={did}", DID_PARAM)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(String.class)
@@ -45,7 +45,7 @@ class AzureKeyVaultSecretPropertiesControllerTests {
 //        Mockito.when(secretServiceFacade.getSecretByDID(DID_PARAM))
 //                .thenReturn(Mono.error(new Exception()));
 //        webTestClient.get()
-//                .uri("/api/v1/secrets?did={did}", DID_PARAM)
+//                .uri("/api/v2/secrets?did={did}", DID_PARAM)
 //                .exchange()
 //                .expectStatus().isNotFound();
 //    }
@@ -55,7 +55,7 @@ class AzureKeyVaultSecretPropertiesControllerTests {
         Mockito.when(secretServiceFacade.deleteSecretByDID(DID_PARAM))
                 .thenReturn(Mono.empty());
         webTestClient.delete()
-                .uri("/api/v1/secrets?did={did}", DID_PARAM)
+                .uri("/api/v2/secrets?did={did}", DID_PARAM)
                 .exchange()
                 .expectStatus().isNoContent();
     }
@@ -65,7 +65,7 @@ class AzureKeyVaultSecretPropertiesControllerTests {
 //        Mockito.when(secretServiceFacade.deleteSecretByDID(DID_PARAM))
 //                .thenReturn(Mono.error(new Exception()));
 //        webTestClient.delete()
-//                .uri("/api/v1/secrets?did={did}", DID_PARAM)
+//                .uri("/api/v2/secrets?did={did}", DID_PARAM)
 //                .exchange()
 //                .expectStatus().isNotFound();
 //    }
