@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import static es.in2.wallet.crypto.utils.Utils.AZURE;
+
 @Configuration
 @RequiredArgsConstructor
 public class AzureConfig {
@@ -22,7 +24,7 @@ public class AzureConfig {
 
     @Bean
     public ConfigurationClient configurationClient() {
-        if (appProperties.secretProvider().name().equals("azure")) {
+        if (appProperties.secretProvider().name().equals(AZURE)) {
             return new ConfigurationClientBuilder()
                     .endpoint(azureAppConfigProperties.endpoint())
                     .credential(new DefaultAzureCredentialBuilder().build())
@@ -34,7 +36,7 @@ public class AzureConfig {
 
     @Bean
     public SecretClient secretClient() {
-        if (appProperties.secretProvider().name().equals("azure")) {
+        if (appProperties.secretProvider().name().equals(AZURE)) {
             return new SecretClientBuilder()
                     .vaultUrl(azureKeyVaultProperties.azureKeyVaultSecretProperties().endpoint())
                     .credential(new DefaultAzureCredentialBuilder().build())

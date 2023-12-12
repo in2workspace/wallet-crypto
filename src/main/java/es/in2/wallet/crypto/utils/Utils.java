@@ -17,6 +17,7 @@ public class Utils {
     public static final String SERVICE_MATRIX = "service-matrix.properties";
     public static final String BEARER_PREFIX = "Bearer ";
     public static final String PROCESS_ID = "ProcessId";
+    public static final String AZURE = "azure";
 
     public static String isNullOrBlank(String string) {
         if (string == null || string.isBlank()) {
