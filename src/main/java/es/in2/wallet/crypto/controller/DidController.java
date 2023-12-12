@@ -22,7 +22,7 @@ import static es.in2.wallet.crypto.utils.Utils.PROCESS_ID;
 @Tag(name = "DID Controller", description = "Endpoints for creating and managing DIDs")
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/dids")
+@RequestMapping("/api/v2/dids")
 @RequiredArgsConstructor
 public class DidController {
 
