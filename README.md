@@ -48,7 +48,7 @@ Now that you have the necessary dependencies, you can configure the wallet-user-
 ```yaml
 wallet-crypto:
   container_name: wallet-crypto
-  image: in2kizuna/wallet-crypto:v1.0.0
+  image: in2kizuna/wallet-crypto:v2.0.0
   environment:
     SERVER_PORT: "8081"
     OPENAPI_SERVER_URL: "http://wallet-crypto:8081"
@@ -73,7 +73,7 @@ wallet-crypto:
 > - `SPRING_CLOUD_AZURE_KEYVAULT_APPCONFIGURATION`: Set
 
 ## Project Status
-The project is currently at version **1.0.0** and is in a stable state.
+The project is currently at version **2.0.0** and is in a stable state.
 
 ## Contact
 For any inquiries or collaboration, you can contact us at:
