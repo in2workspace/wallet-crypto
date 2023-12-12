@@ -14,19 +14,19 @@ public class AppConfigs {
     private final AppProperties appProperties;
     private final OpenApiProperties openApiProperties;
     private final AzureKeyVaultProperties azureKeyVaultProperties;
+    private final AzureAppConfigProperties azureAppConfigProperties;
     private final HashiCorpVaultProperties hashiCorpVaultProperties;
     private final WalletDataProperties walletDataProperties;
 
     @PostConstruct
     void init() {
-        String prefixMessage = " > {}";
-        log.info("Configurations uploaded: ");
-        log.info(prefixMessage, appProperties);
-        log.info(prefixMessage, openApiProperties.server());
-        log.info(prefixMessage, openApiProperties.info());
-        log.info(prefixMessage, azureKeyVaultProperties);
-        log.info(prefixMessage, hashiCorpVaultProperties);
-        log.info(prefixMessage, walletDataProperties);
+        log.debug("Configurations uploaded: ");
+        log.debug("App Properties: {}", appProperties);
+        log.debug("OpenAPI Properties: {}", openApiProperties);
+        log.debug("Azure Key Vault Properties: {}", azureKeyVaultProperties);
+        log.debug("Azure App Config Properties: {}", azureAppConfigProperties);
+        log.debug("HashiCorp Vault Properties: {}", hashiCorpVaultProperties);
+        log.debug("Wallet Data Properties: {}", walletDataProperties);
     }
 
 }

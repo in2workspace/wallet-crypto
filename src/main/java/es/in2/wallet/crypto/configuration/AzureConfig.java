@@ -9,6 +9,7 @@ import es.in2.wallet.crypto.configuration.properties.AppProperties;
 import es.in2.wallet.crypto.configuration.properties.AzureAppConfigProperties;
 import es.in2.wallet.crypto.configuration.properties.AzureKeyVaultProperties;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -16,6 +17,7 @@ import static es.in2.wallet.crypto.utils.Utils.AZURE;
 
 @Configuration
 @RequiredArgsConstructor
+@ConditionalOnProperty(prefix = "app", name = "secret-provider", havingValue = "azure")
 public class AzureConfig {
 
     private final AppProperties appProperties;
