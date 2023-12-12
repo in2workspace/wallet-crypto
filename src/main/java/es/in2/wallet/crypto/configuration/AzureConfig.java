@@ -17,6 +17,7 @@ import static es.in2.wallet.crypto.utils.Utils.AZURE;
 
 @Configuration
 @RequiredArgsConstructor
+@ConditionalOnProperty(prefix = "app", name = "secret-provider", havingValue = "azure")
 public class AzureConfig {
 
     private final AppProperties appProperties;
@@ -24,7 +25,6 @@ public class AzureConfig {
     private final AzureKeyVaultProperties azureKeyVaultProperties;
 
     @Bean
-    @ConditionalOnProperty(prefix = "app", name = "secretProvider", havingValue = "hashicorp")
     public ConfigurationClient configurationClient() {
         if (appProperties.secretProvider().name().equals(AZURE)) {
             return new ConfigurationClientBuilder()
@@ -37,7 +37,6 @@ public class AzureConfig {
     }
 
     @Bean
-    @ConditionalOnProperty(prefix = "app", name = "secretProvider", havingValue = "hashicorp")
     public SecretClient secretClient() {
         if (appProperties.secretProvider().name().equals(AZURE)) {
             return new SecretClientBuilder()
