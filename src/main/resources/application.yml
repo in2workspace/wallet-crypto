@@ -6,19 +6,19 @@ spring:
     web-application-type: reactive
   cloud:
     vault:
-      host:
-      port:
-      authentication:
+      host: vault
+      port: 8201
+      authentication: token
       token:
-      scheme:
+      scheme: http
       kv:
         enabled: true
     azure:
       keyvault:
         secret:
-          endpoint:
+          endpoint: https://example
       appconfiguration:
-        endpoint:
+        endpoint: https://example
 
 # Logging Configuration
 logging:
@@ -67,27 +67,27 @@ server:
 
 # Application Configuration
 app:
-  secretProvider:
+  secret-provider:
     name:
 
 # Application Configuration
 openapi:
   server:
-    url:
-    description:
+    url: https://localhost:8080
+    description: server description
   info:
-    title:
-    version:
-    description:
-    termsOfService:
+    title:  application title
+    version: X.Y.Z
+    description: application description
+    termsOfService: https://example.com/terms-of-service
     license:
-      name:
-      url:
+      name: Apache 2.0
+      url: https://www.apache.org/licenses/LICENSE-2.0.html
     contact:
-      email:
-      name:
-      url:
+      email: info@example.com
+      name: john doe
+      url: https://example.com
 
 # Wallet Configuration
 wallet-data:
-  url:
+  url: http://wallet-data:8080

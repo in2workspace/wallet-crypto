@@ -9,12 +9,12 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @RequiredArgsConstructor
+@ConditionalOnProperty(prefix = "app", name = "secret-provider", havingValue = "hashicorp")
 public class HashiCorpVaultConfig {
 
     private final HashiCorpVaultProperties hashiCorpVaultProperties;
 
     @Bean
-    @ConditionalOnProperty(prefix = "app", name = "secret-provider", havingValue = "hashicorp")
     public VaultProperties vaultProperties() {
         VaultProperties vaultProperties = new VaultProperties();
         vaultProperties.setAuthentication(VaultProperties.AuthenticationMethod.TOKEN);
