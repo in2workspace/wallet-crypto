@@ -12,6 +12,7 @@ import java.util.Map;
 @Slf4j
 @Component
 public class Utils {
+    private Utils(){}
 
     private static final WebClient webClient = WebClient.builder().build();
     public static final String SERVICE_MATRIX = "service-matrix.properties";
