@@ -26,6 +26,10 @@ The Wallet Crypto Component is an essential service within the Wallet Solution, 
 - Develop a secure system for private key storage.
 - Implement encryption mechanisms to ensure confidentiality.
 
+### Document Signing Service
+- Enable document signing using the private key associated with a user's DID.
+- Integrate seamlessly with DID Management for streamlined user experience.
+
 ## Installation
 ### Prerequisites
 - [Docker Desktop](https://www.docker.com/)
@@ -83,4 +87,4 @@ For any inquiries or collaboration, you can contact us at:
 
 ## Creation Date and Update Dates
 * **Creation Date:** October 25, 2023
-* **Last Updated:** December 4, 2023
+* **Last Updated:** December 15, 2023
