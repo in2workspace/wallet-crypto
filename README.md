@@ -1,4 +1,18 @@
-# Wallet Crypto Component
+<div style="text-align: center;">
+
+<h1>Wallet Crypto</h1>
+<span>by </span><a href="https://in2.es">in2.es</a>
+<p><p>
+
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=in2workspace_wallet-crypto&metric=security_rating)](https://sonarcloud.io/dashboard?id=in2workspace_wallet-crypto)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=in2workspace_wallet-crypto&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=in2workspace_wallet-crypto)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=in2workspace_wallet-crypto&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=in2workspace_wallet-crypto)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=in2workspace_wallet-crypto&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=in2workspace_wallet-crypto)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=in2workspace_wallet-crypto&metric=ncloc)](https://sonarcloud.io/dashboard?id=in2workspace_wallet-crypto)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=in2workspace_wallet-crypto&metric=alert_status)](https://sonarcloud.io/dashboard?id=in2workspace_wallet-crypto)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=in2workspace_wallet-crypto&metric=coverage)](https://sonarcloud.io/summary/new_code?id=in2workspace_wallet-crypto)
+
+</div>
 
 ## Introduction
 
