@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
 import org.springframework.stereotype.Service;
 import org.springframework.vault.core.VaultOperations;
+import org.springframework.vault.support.VaultResponseSupport;
 import reactor.core.publisher.Mono;
 
 import javax.security.auth.login.CredentialNotFoundException;
@@ -36,32 +37,45 @@ public class HashiCorpVaultStorageServiceImpl implements HashiCorpVaultStorageSe
     @Override
     public Mono<String> getSecretByKey(String key) {
         String processId = MDC.get(PROCESS_ID);
-        return Mono.fromCallable(() -> vaultOperations.read("kv/" + key, Object.class))
-                .flatMap(response -> {
+        return Mono.defer(() -> {
+                    log.debug("Attempting to read from Vault with key: {}", key);
+                    VaultResponseSupport<Object> response = vaultOperations.read("kv/" + key, Object.class);
+                    log.debug("Response from Vault for key {}: {}", key, response);
+
+                    if (response == null || response.getData() == null) {
+                        log.debug("Secret not found for key: {}", key);
+                        return Mono.error(new CredentialNotFoundException("Secret not found for key: " + key));
+                    }
+
                     try {
-                        // Read data from response to get the secret
-                        if (response != null && response.getData() != null) {
-                            String json = objectMapper.writeValueAsString(response.getData());
-                            String secret = objectMapper.readValue(json, VaultSecretData.class).privateKey();
-                            return Mono.just(secret);
-                        } else {
-                            return Mono.error(new CredentialNotFoundException("Secret not found"));
-                        }
+                        String json = objectMapper.writeValueAsString(response.getData());
+                        VaultSecretData secretData = objectMapper.readValue(json, VaultSecretData.class);
+                        return Mono.justOrEmpty(secretData.privateKey());
                     } catch (Exception e) {
-                        return Mono.error(new ParseErrorException("Vault response could not be parsed"));
+                        log.error("Error processing response from vault", e);
+                        return Mono.error(new ParseErrorException("Error parsing vault response: " + e.getMessage()));
                     }
                 })
-                .doOnSuccess(voidValue -> log.debug("ProcessID: {} - Secret retrieved successfully", processId))
-                .doOnError(error -> log.error("Error retrieving secret: {}", error.getMessage(), error));
+                .doOnSuccess(secret -> log.debug("ProcessID: {} - Secret retrieved successfully for key: {}", processId, key))
+                .doOnError(error -> log.error("Error retrieving secret for key {}: {}", key, error.getMessage(), error));
     }
 
     @Override
     public Mono<Void> deleteSecretByKey(String key) {
         String processId = MDC.get(PROCESS_ID);
-        return Mono.fromRunnable(() -> vaultOperations.delete("kv/" + key))
+        return Mono.defer(() -> {
+                    log.debug("Attempting to delete from Vault with key: {}", key);
+                    try {
+                        vaultOperations.delete("kv/" + key);
+                        log.debug("ProcessID: {} - Secret deleted successfully", processId);
+                        return Mono.<Void>empty();
+                    } catch (Exception e) {
+                        log.error("Error deleting secret for key {}: {}", key, e.getMessage(), e);
+                        return Mono.error(e);
+                    }
+                })
                 .then()
-                .doOnSuccess(voidValue -> log.debug("ProcessID: {} - Secret deleted successfully", processId))
-                .onErrorResume(Exception.class, Mono::error);
+                .doOnError(error -> log.error("Error occurred during deletion for key {}: {}", key, error.getMessage(), error));
     }
 
 }

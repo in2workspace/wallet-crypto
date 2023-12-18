@@ -30,7 +30,7 @@ public class SignerController {
         MDC.put(PROCESS_ID, processId);
         // Async Process Start
         log.debug("ProcessID: {} - sign document: {}", processId, signRequest);
-        return signerServiceFacade.signDocument(signRequest.document(),signRequest.did())
+        return signerServiceFacade.signDocument(signRequest.document(),signRequest.did(),signRequest.documentType())
                 .onErrorResume(SecretNotFoundException.class, Mono::error)
                 .doFinally(signalType -> MDC.remove(PROCESS_ID));
     }

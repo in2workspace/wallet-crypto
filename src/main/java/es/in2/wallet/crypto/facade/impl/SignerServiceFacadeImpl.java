@@ -19,10 +19,10 @@ public class SignerServiceFacadeImpl implements SignerServiceFacade {
     private final HashiCorpVaultStorageService hashiCorpVaultStorageService;
     private final SignerService signerService;
     @Override
-    public Mono<String> signDocument(JsonNode document, String did) {
+    public Mono<String> signDocument(JsonNode document, String did, String documentType) {
         String processId = MDC.get(PROCESS_ID);
         return hashiCorpVaultStorageService.getSecretByKey(did)
-                .flatMap(privateKey ->signerService.signDocumentWithPrivateKey(document,did,privateKey))
+                .flatMap(privateKey ->signerService.signDocumentWithPrivateKey(document,did,documentType,privateKey))
                 .doOnSuccess(signedDocument -> log.info("ProcessID: {} - Document signed: {}", signedDocument, did))
                 .doOnError(throwable -> log.error("ProcessID: {} - Failed to create or save DID: {}", processId, throwable.getMessage()));
     }
