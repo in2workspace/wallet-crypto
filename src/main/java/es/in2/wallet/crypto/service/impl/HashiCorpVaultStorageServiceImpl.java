@@ -64,8 +64,16 @@ public class HashiCorpVaultStorageServiceImpl implements HashiCorpVaultStorageSe
     public Mono<Void> deleteSecretByKey(String key) {
         String processId = MDC.get(PROCESS_ID);
         return Mono.defer(() -> {
-                    log.debug("Attempting to delete from Vault with key: {}", key);
+                    log.debug("Checking if secret exists in Vault for key: {}", key);
+                    VaultResponseSupport<Object> response = vaultOperations.read("kv/" + key, Object.class);
+
+                    if (response == null) {
+                        log.debug("Secret not found for key: {}, nothing to delete", key);
+                        return Mono.error(new CredentialNotFoundException("Secret not found for key: " + key));
+                    }
+
                     try {
+                        log.debug("Deleting secret from Vault for key: {}", key);
                         vaultOperations.delete("kv/" + key);
                         log.debug("ProcessID: {} - Secret deleted successfully", processId);
                         return Mono.<Void>empty();
