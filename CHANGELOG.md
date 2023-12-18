@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add support for GitHub Actions for CI/CD.
 - Checkstyle for code quality.
 - Endpoint to sign documents with using your dids associated to your private key.
+- Add SonarCloud for code quality.
 
 ## [v1.0.0] - 2023-12-4
 
