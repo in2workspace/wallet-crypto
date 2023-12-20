@@ -65,12 +65,10 @@ Now that you have the necessary dependencies, you can configure the wallet-user-
 * Wallet-Crypto Configuration
 ```yaml
 wallet-crypto:
-  container_name: wallet-crypto
   image: in2kizuna/wallet-crypto:v2.0.0
   environment:
-    SERVER_PORT: "8081"
-    OPENAPI_SERVER_URL: "http://wallet-crypto:8081"
-    WALLET_DATA_URL: "http://wallet-data:8086/api/dids"
+    OPENAPI_SERVER_URL: "http://localhost:8081"
+    WALLET_DATA_URL: "http://wallet-data:8080/api/dids"
     SPRING_CLOUD_VAULT_AUTHENTICATION: "token"
     SPRING_CLOUD_VAULT_TOKEN: "<your-vault-token>"
     SPRING_CLOUD_VAULT_HOST: "<your-vault-host>"
@@ -78,12 +76,8 @@ wallet-crypto:
     SPRING_CLOUD_VAULT_PORT: "<your-vault-port>"
     SPRING_CLOUD_VAULT_KV_ENABLED: "true"
     APP_SECRET-PROVIDER_NAME: "hashicorp"
-  command:
-    - run
   ports:
-    - "8081:8081"
-  networks:
-    local_network:
+    - "8081:8080"
 ```
 **Important Note**:
 > The provided configuration is for connecting to HashiCorp Vault. If you wish to connect to Azure Key Vault instead, you will need to adjust the following environment variables:
