@@ -8,6 +8,7 @@ import reactor.core.publisher.Mono;
 
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 @Slf4j
 @Component
@@ -19,6 +20,9 @@ public class Utils {
     public static final String BEARER_PREFIX = "Bearer ";
     public static final String PROCESS_ID = "ProcessId";
     public static final String AZURE = "azure";
+    public static final Pattern PROOF_DOCUMENT_PATTERN = Pattern.compile("proof");
+    public static final Pattern VP_DOCUMENT_PATTERN = Pattern.compile("vp");
+    public static final Pattern VC_DOCUMENT_PATTERN = Pattern.compile("vc");
 
     public static String isNullOrBlank(String string) {
         if (string == null || string.isBlank()) {

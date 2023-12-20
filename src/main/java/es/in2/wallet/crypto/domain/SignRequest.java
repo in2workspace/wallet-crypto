@@ -7,6 +7,8 @@ import lombok.Builder;
 @Builder
 public record SignRequest(
         @JsonProperty("did") String did,
-        @JsonProperty("document") JsonNode document
+        @JsonProperty("document") JsonNode document,
+        @JsonProperty("document_type") String documentType
+        
 ) {
 }
