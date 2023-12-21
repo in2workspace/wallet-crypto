@@ -11,9 +11,10 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 @Slf4j
-@Component
 public class Utils {
-    private Utils(){}
+    private Utils(){
+        throw new IllegalStateException("Utility class");
+    }
 
     private static final WebClient webClient = WebClient.builder().build();
     public static final String SERVICE_MATRIX = "service-matrix.properties";
