@@ -33,9 +33,15 @@ checkstyleTest {
 
 sonar {
     properties {
+        property "sonar.projectName", "Wallet Crypto"
         property "sonar.projectKey", "in2workspace_wallet-crypto"
         property "sonar.organization", "in2workspace"
         property "sonar.host.url", "https://sonarcloud.io"
+        property "sonar.coverage.exclusions",
+                "src/main/java/es/in2/wallet/crypto/WalletCryptoApplication.java, " +
+                        "src/main/java/es/in2/wallet/crypto/configuration/**, " +
+                        "src/main/java/es/in2/wallet/crypto/domain/**, " +
+                        "src/main/java/es/in2/wallet/crypto/exception/**, "
     }
 }
 
@@ -133,10 +139,10 @@ tasks.jacocoTestReport {
     afterEvaluate {
         classDirectories.setFrom(files(classDirectories.files.collect {
             fileTree(dir: it, exclude: [
-                    '**/WalletCryptoApplication.class',
-                    '**/configuration/**',
-                    '**/domain/**',
-                    '**/exception/**'
+                    "src/main/java/es/in2/wallet/crypto/WalletCryptoApplication.java",
+                    "src/main/java/es/in2/wallet/crypto/configuration/**",
+                    "src/main/java/es/in2/wallet/crypto/domain/**",
+                    "src/main/java/es/in2/wallet/crypto/exception/**"
             ])
         }))
     }
