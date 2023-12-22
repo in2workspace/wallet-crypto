@@ -2,7 +2,7 @@ package es.in2.wallet.crypto.service.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import es.in2.wallet.crypto.config.properties.WalletDataProperties;
+import es.in2.wallet.crypto.configuration.properties.WalletDataProperties;
 import es.in2.wallet.crypto.exception.ParseErrorException;
 import es.in2.wallet.crypto.domain.DidRequestDTO;
 import es.in2.wallet.crypto.service.DataStorageService;
@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static es.in2.wallet.crypto.util.Utils.postRequest;
+import static es.in2.wallet.crypto.utils.Utils.postRequest;
 
 @Slf4j
 @Service

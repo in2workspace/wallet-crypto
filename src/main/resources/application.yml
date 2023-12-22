@@ -9,16 +9,16 @@ spring:
       host: vault
       port: 8201
       authentication: token
-      token: hvs.IcpenQulHxdxbqImRcW0WwrU
+      token:
       scheme: http
       kv:
         enabled: true
     azure:
       keyvault:
         secret:
-          endpoint: https://kv-shared-iep-dev.vault.azure.net/
+          endpoint: https://example
       appconfiguration:
-        endpoint: https://app-conf-shared-iep-dev.azconfig.io
+        endpoint: https://example
 
 # Logging Configuration
 logging:
@@ -68,26 +68,26 @@ server:
 # Application Configuration
 app:
   secret-provider:
-    name: azure #hashicorp #azure
+    name:
 
 # Application Configuration
 openapi:
   server:
-    url: http://localhost:8080
-    description: Wallet Crypto API
+    url: https://localhost:8080
+    description: server description
   info:
-    title: Wallet Crypto API
-    version: 1.0.0
-    description: Wallet Crypto Software Solution
+    title:  application title
+    version: X.Y.Z
+    description: application description
     termsOfService: https://example.com/terms-of-service
     license:
       name: Apache 2.0
       url: https://www.apache.org/licenses/LICENSE-2.0.html
     contact:
-      email: info@in2.es
-      name: IN2, Ingeniería de la Información
-      url: https://in2.es
+      email: info@example.com
+      name: john doe
+      url: https://example.com
 
 # Wallet Configuration
 wallet-data:
-  url: http://wallet-data:8086/api/dids
+  url: http://wallet-data:8080

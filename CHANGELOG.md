@@ -4,8 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [[v1.0.0](https://github.com/in2workspace/wallet-crypto/releases/tag/1.0.0)] - 2023-12-4
+## [v2.0.0](https://github.com/in2workspace/wallet-crypto/releases/tag/v2.0.0) - 2023-12-22
+### Added
+- Endpoint to sign documents with using your DIDs associated to your private key.
+- Support GitHub Actions for CI/CD.
+- Support SonarCloud for code quality.
+- Checkstyle for code quality.
 
+## [v1.0.0](https://github.com/in2workspace/wallet-crypto/releases/tag/1.0.0) - 2023-12-4
 ### Added
 - Implemented a robust private key generator with security measures to protect the generation process.
 - Functions for key management, rotation, and revocation, and security policies for DID administration.
@@ -19,4 +25,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Environment variable configuration for integrating with existing Vault instances and Wallet-Data component.
 - Docker-compose configuration for easy deployment and setup
 - Project status, contact information, and creation/update dates in README.
-

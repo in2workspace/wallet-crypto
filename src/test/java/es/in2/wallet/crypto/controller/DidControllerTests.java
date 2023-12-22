@@ -35,7 +35,7 @@ class DidControllerTests {
         Mockito.when(didServiceFacade.createDidKeyAndPersistIntoWalletDataAndVault(Mockito.anyString()))
                 .thenReturn(Mono.just(DID_SAMPLE));
         webTestClient.post()
-                .uri("/api/v1/dids/key")
+                .uri("/api/v2/dids/key")
                 .header(HttpHeaders.AUTHORIZATION, BEARER_TOKEN_SAMPLE)
                 .exchange()
                 .expectStatus().isOk()
@@ -50,7 +50,7 @@ class DidControllerTests {
         Mockito.when(didServiceFacade.createDidKeyAndPersistIntoWalletDataAndVault(Mockito.anyString()))
                 .thenReturn(Mono.just(DID_SAMPLE));
         webTestClient.post()
-                .uri("/api/v1/dids/key/jwk-jcs-pub")
+                .uri("/api/v2/dids/key/jwk-jcs-pub")
                 .header(HttpHeaders.AUTHORIZATION, BEARER_TOKEN_SAMPLE)
                 .exchange()
                 .expectStatus().isCreated()
@@ -63,7 +63,7 @@ class DidControllerTests {
         Mockito.when(didServiceFacade.createDidKeyAndPersistIntoWalletDataAndVault(Mockito.anyString()))
                 .thenReturn(Mono.just(DID_SAMPLE));
         webTestClient.post()
-                .uri("/api/v1/dids/key")
+                .uri("/api/v2/dids/key")
                 .exchange()
                 .expectStatus().isBadRequest()
                 .expectHeader().contentType(MediaType.APPLICATION_JSON)

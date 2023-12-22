@@ -1,4 +1,24 @@
-# Wallet Crypto Component
+<div align="center">
+
+<h1>Wallet Crypto</h1>
+<span>by </span><a href="https://in2.es">in2.es</a>
+<p><p>
+
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=in2workspace_wallet-crypto&metric=alert_status)](https://sonarcloud.io/dashboard?id=in2workspace_wallet-crypto)
+
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=in2workspace_wallet-crypto&metric=bugs)](https://sonarcloud.io/summary/new_code?id=in2workspace_wallet-crypto)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=in2workspace_wallet-crypto&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=in2workspace_wallet-crypto)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=in2workspace_wallet-crypto&metric=security_rating)](https://sonarcloud.io/dashboard?id=in2workspace_wallet-crypto)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=in2workspace_wallet-crypto&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=in2workspace_wallet-crypto)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=in2workspace_wallet-crypto&metric=ncloc)](https://sonarcloud.io/dashboard?id=in2workspace_wallet-crypto)
+
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=in2workspace_wallet-crypto&metric=coverage)](https://sonarcloud.io/summary/new_code?id=in2workspace_wallet-crypto)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=in2workspace_wallet-crypto&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=in2workspace_wallet-crypto)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=in2workspace_wallet-crypto&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=in2workspace_wallet-crypto)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=in2workspace_wallet-crypto&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=in2workspace_wallet-crypto)
+[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=in2workspace_wallet-crypto&metric=sqale_index)](https://sonarcloud.io/summary/new_code?id=in2workspace_wallet-crypto)
+
+</div>
 
 ## Introduction
 
@@ -26,6 +46,10 @@ The Wallet Crypto Component is an essential service within the Wallet Solution, 
 - Develop a secure system for private key storage.
 - Implement encryption mechanisms to ensure confidentiality.
 
+### Document Signing Service
+- Enable document signing using the private key associated with a user's DID.
+- Integrate seamlessly with DID Management for streamlined user experience.
+
 ## Installation
 ### Prerequisites
 - [Docker Desktop](https://www.docker.com/)
@@ -47,12 +71,10 @@ Now that you have the necessary dependencies, you can configure the wallet-user-
 * Wallet-Crypto Configuration
 ```yaml
 wallet-crypto:
-  container_name: wallet-crypto
-  image: in2kizuna/wallet-crypto:v1.0.0
+  image: in2kizuna/wallet-crypto:v2.0.0
   environment:
-    SERVER_PORT: "8081"
-    OPENAPI_SERVER_URL: "http://wallet-crypto:8081"
-    WALLET_DATA_URL: "http://wallet-data:8086/api/dids"
+    OPENAPI_SERVER_URL: "http://localhost:8081"
+    WALLET_DATA_URL: "http://wallet-data:8080/api/dids"
     SPRING_CLOUD_VAULT_AUTHENTICATION: "token"
     SPRING_CLOUD_VAULT_TOKEN: "<your-vault-token>"
     SPRING_CLOUD_VAULT_HOST: "<your-vault-host>"
@@ -60,20 +82,16 @@ wallet-crypto:
     SPRING_CLOUD_VAULT_PORT: "<your-vault-port>"
     SPRING_CLOUD_VAULT_KV_ENABLED: "true"
     APP_SECRET-PROVIDER_NAME: "hashicorp"
-  command:
-    - run
   ports:
-    - "8081:8081"
-  networks:
-    local_network:
+    - "8081:8080"
 ```
 **Important Note**:
 > The provided configuration is for connecting to HashiCorp Vault. If you wish to connect to Azure Key Vault instead, you will need to adjust the following environment variables:
-> - `SPRING_CLOUD_AZURE_KEYVAULT_SECRET_ENDPOINT`: Set this to your Azure Key Vault secret endpoint.
-> - `SPRING_CLOUD_AZURE_KEYVAULT_APPCONFIGURATION`: Set
+> - `SPRING_CLOUD_AZURE_KEYVAULT_SECRET_ENDPOINT`: Set this to your Azure Key Vault azureKeyVaultSecretProperties endpoint.
+> - `SPRING_CLOUD_AZURE_KEYVAULT_APPCONFIGURATION`: Set this to your Azure Key Vault appConfiguration
 
 ## Project Status
-The project is currently at version **1.0.0** and is in a stable state.
+The project is currently at version **2.0.0** and is in a stable state.
 
 ## Contact
 For any inquiries or collaboration, you can contact us at:
@@ -83,4 +101,4 @@ For any inquiries or collaboration, you can contact us at:
 
 ## Creation Date and Update Dates
 * **Creation Date:** October 25, 2023
-* **Last Updated:** December 4, 2023
+* **Last Updated:** December 15, 2023

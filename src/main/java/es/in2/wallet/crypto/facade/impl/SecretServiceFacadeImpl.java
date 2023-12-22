@@ -1,6 +1,6 @@
 package es.in2.wallet.crypto.facade.impl;
 
-import es.in2.wallet.crypto.config.properties.AppProperties;
+import es.in2.wallet.crypto.configuration.properties.AppProperties;
 import es.in2.wallet.crypto.facade.SecretServiceFacade;
 import es.in2.wallet.crypto.service.AzureKeyVaultStorageService;
 import es.in2.wallet.crypto.service.HashiCorpVaultStorageService;
@@ -10,7 +10,7 @@ import org.slf4j.MDC;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
-import static es.in2.wallet.crypto.util.Utils.PROCESS_ID;
+import static es.in2.wallet.crypto.utils.Utils.PROCESS_ID;
 
 @Slf4j
 @Service

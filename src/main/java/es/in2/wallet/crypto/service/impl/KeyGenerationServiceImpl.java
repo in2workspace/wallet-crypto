@@ -21,7 +21,7 @@ public class KeyGenerationServiceImpl implements KeyGenerationService {
     @Override
     public Mono<KeyId> generateKey() {
         String processId = MDC.get("processId");
-        return Mono.fromCallable(() -> keyService.generate(KeyAlgorithm.ECDSA_Secp256k1))
+        return Mono.fromCallable(() -> keyService.generate(KeyAlgorithm.ECDSA_Secp256r1))
                 .doOnSuccess(keyId -> log.debug("ProcessID: {} - Key generated: {}", processId, keyId.getId()))
                 .doOnError(throwable -> log.error("ProcessID: {} - Error generating KeyId and private key: {}", processId, throwable.getMessage()));
     }
